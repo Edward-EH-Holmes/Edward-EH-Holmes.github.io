@@ -39,7 +39,7 @@ function renderConversations() {
       if (msg.sender === "jobs") {
         row.innerHTML = `
           <div class="avatar avatar-jobs" title="Steve Jobs AI">
-            <img src="./avatars/jobs.jpg" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')" alt="Jobs">
+            <img src="./image/jobs.png" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')" alt="Jobs">
             <span class="avatar-init">SJ</span>
           </div>
           <div class="bubble-wrap">
@@ -54,7 +54,7 @@ function renderConversations() {
             <div class="bubble bubble-user">${formatText(msg.text)}</div>
           </div>
           <div class="avatar avatar-user" title="You">
-            <img src="./avatars/user.jpg" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')" alt="User">
+            <img src="./image/user.png" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')" alt="User">
             <span class="avatar-init">E</span>
           </div>
         `;
