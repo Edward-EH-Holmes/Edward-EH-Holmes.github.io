@@ -330,6 +330,45 @@ body {
   opacity: 0.8;
 }
 
+/* === Audio Playback States === */
+
+/* Bubble is clickable */
+.bubble {
+  cursor: pointer;
+  transition: filter 0.15s, box-shadow 0.15s;
+}
+.bubble:hover {
+  filter: brightness(1.12);
+}
+
+/* Currently playing */
+.bubble.playing {
+  box-shadow: 0 0 0 2px var(--accent), 0 0 14px 3px rgba(10, 122, 255, 0.35);
+  animation: bubblePulse 1.2s ease-in-out infinite;
+}
+.bubble-jobs.playing {
+  box-shadow: 0 0 0 2px var(--accent-gold), 0 0 14px 3px rgba(212, 168, 67, 0.30);
+  animation: bubblePulseGold 1.2s ease-in-out infinite;
+}
+
+@keyframes bubblePulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--accent), 0 0 14px 3px rgba(10, 122, 255, 0.35); }
+  50%       { box-shadow: 0 0 0 3px var(--accent), 0 0 22px 6px rgba(10, 122, 255, 0.55); }
+}
+@keyframes bubblePulseGold {
+  0%, 100% { box-shadow: 0 0 0 2px var(--accent-gold), 0 0 14px 3px rgba(212, 168, 67, 0.30); }
+  50%       { box-shadow: 0 0 0 3px var(--accent-gold), 0 0 22px 6px rgba(212, 168, 67, 0.50); }
+}
+
+/* Audio file not found flash */
+.bubble.audio-missing {
+  animation: flashMissing 0.35s ease 2;
+}
+@keyframes flashMissing {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
 /* === Footer === */
 .site-footer {
   text-align: center;
@@ -369,4 +408,43 @@ body {
   .header-title h1 {
     font-size: 15px;
   }
+}
+
+/* === Video Section === */
+.video-section {
+  margin: 28px 0 8px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid #2a2a2e;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+}
+
+.video-section video {
+  display: block;
+  width: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  background: #000;
+}
+
+.video-caption {
+  padding: 10px 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: #111113;
+  border-top: 1px solid #2a2a2e;
+  letter-spacing: 0.2px;
+}
+
+.video-fallback {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.video-fallback a {
+  color: var(--accent);
+  text-decoration: none;
 }

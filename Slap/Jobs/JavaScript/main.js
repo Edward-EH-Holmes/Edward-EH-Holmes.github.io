@@ -20,6 +20,59 @@ function renderTechStack() {
   });
 }
 
+// Global audio player — only one plays at a time
+let currentAudio = null;
+
+/**
+ * Try to play an audio file for the given message.
+ * Expected file paths (tried in order):
+ *   ./audio/<sender>_<convId>_<msgIdx>.mp3
+ *   ./audio/<sender>_<convId>_<msgIdx>.wav
+ *
+ * Example: ./audio/jobs_3_0.mp3  or  ./audio/user_1_0.wav
+ *
+ * If no file is found, the bubble briefly flashes to indicate "no audio".
+ */
+function playBubbleAudio(sender, convId, msgIdx, bubbleEl) {
+  const candidates = [
+    `./audio/${sender}_${convId}_${msgIdx}.mp3`,
+    `./audio/${sender}_${convId}_${msgIdx}.wav`,
+  ];
+
+  // Stop current playback
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    document.querySelectorAll(".bubble.playing").forEach(b => b.classList.remove("playing"));
+    const wasThisBubble = currentAudio._bubbleEl === bubbleEl;
+    currentAudio = null;
+    if (wasThisBubble) return; // second click = toggle off
+  }
+
+  function tryNext(i) {
+    if (i >= candidates.length) {
+      bubbleEl.classList.add("audio-missing");
+      setTimeout(() => bubbleEl.classList.remove("audio-missing"), 700);
+      return;
+    }
+    const audio = new Audio(candidates[i]);
+    audio._bubbleEl = bubbleEl;
+    audio.addEventListener("error", () => tryNext(i + 1));
+    audio.addEventListener("canplaythrough", () => {
+      currentAudio = audio;
+      bubbleEl.classList.add("playing");
+      audio.play();
+    }, { once: true });
+    audio.addEventListener("ended", () => {
+      bubbleEl.classList.remove("playing");
+      currentAudio = null;
+    }, { once: true });
+    audio.load();
+  }
+
+  tryNext(0);
+}
+
 function renderConversations() {
   const feed = document.getElementById("chat-feed");
   if (!feed) return;
@@ -44,29 +97,37 @@ function renderConversations() {
           </div>
           <div class="bubble-wrap">
             <div class="sender-name">Steve Jobs</div>
-            <div class="bubble bubble-jobs">${formatText(msg.text)}</div>
+            <div class="bubble bubble-jobs" title="点击播放语音">${formatText(msg.text)}</div>
           </div>
         `;
       } else {
+        // avatar first, bubble-wrap second — row-reverse puts avatar on the RIGHT
         row.innerHTML = `
-          <div class="bubble-wrap bubble-wrap-user">
-            <div class="sender-name sender-name-user">Edward</div>
-            <div class="bubble bubble-user">${formatText(msg.text)}</div>
-          </div>
-          <div class="avatar avatar-user" title="You">
+          <div class="avatar avatar-user" title="Edward">
             <img src="./image/user.png" onerror="this.style.display='none';this.parentElement.classList.add('avatar-fallback')" alt="User">
             <span class="avatar-init">E</span>
+          </div>
+          <div class="bubble-wrap bubble-wrap-user">
+            <div class="sender-name sender-name-user">Edward</div>
+            <div class="bubble bubble-user" title="点击播放语音">${formatText(msg.text)}</div>
           </div>
         `;
       }
 
       feed.appendChild(row);
+
+      // Attach click → audio to the bubble
+      const bubble = row.querySelector(".bubble");
+      if (bubble) {
+        bubble.addEventListener("click", () => {
+          playBubbleAudio(msg.sender, conv.id, msgIdx, bubble);
+        });
+      }
     });
   });
 }
 
 function formatText(text) {
-  // Convert newlines to <br> and wrap emphasis text
   return text
     .replace(/\n/g, "<br>")
     .replace(/——/g, "<span class='em-dash'>——</span>");
