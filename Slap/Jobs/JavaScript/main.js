@@ -35,8 +35,8 @@ let currentAudio = null;
  */
 function playBubbleAudio(sender, convId, msgIdx, bubbleEl) {
   const candidates = [
-    `./audio/${sender}_${convId}_${msgIdx}.mp3`,
-    `./audio/${sender}_${convId}_${msgIdx}.wav`,
+    "./audio/" + sender + "_" + convId + "_" + msgIdx + ".mp3",
+    "./audio/" + sender + "_" + convId + "_" + msgIdx + ".wav",
   ];
 
   // Stop current playback
