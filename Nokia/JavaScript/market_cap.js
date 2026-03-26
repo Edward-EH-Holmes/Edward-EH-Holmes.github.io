@@ -1,6 +1,6 @@
 const marketCapData = { // In billion USD, end of year
 Apple: {
-2007: 173.42,
+2007: 101.42,
 2008: 75.87,
 2009: 189.8,
 2010: 295.89,
