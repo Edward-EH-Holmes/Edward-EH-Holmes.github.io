@@ -1,10 +1,10 @@
 // Group 5 Team Members Data
 const teamMembers = [
-  { name: "XU Hanxi", id: "25149923G", contribution: "Team Leader, Project Management, Document Retrieval" },
-  { name: "ZHAO Shanhe", id: "25149861G", contribution: "Text Writing, Document Research, Web Development" },
-  { name: "ZHAN Changhao", id: "25150816G", contribution: "Brainstorming, Feedback Revision, Document Research" },
-  { name: "YI Sipeng", id: "25148316G", contribution: "Discussion" },
-  { name: "ZHANG Zhiyuan", id: "25150114G", contribution: "Discussion" },
+  { name: "许涵茜", id: "25149923G", contribution: "组长，项目管理，文档检索，小组讨论" },
+  { name: "赵珊禾", id: "25149861G", contribution: "文本写作，文档研究，网页开发，AI模拟，小组讨论" },
+  { name: "詹昌昊", id: "25150816G", contribution: "头脑风暴，反馈修订，文档研究，小组讨论" },
+  { name: "易斯鹏", id: "25148316G", contribution: "小组讨论" },
+  { name: "张智源", id: "25150114G", contribution: "小组讨论" },
 ];
 
 function renderTeamTable() {
