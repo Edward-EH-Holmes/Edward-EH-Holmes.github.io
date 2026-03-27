@@ -18,7 +18,7 @@ const decisionTableData = [
     time: "2010",
     real: "Symbian^3 + Ovi崩溃",
     optimal: "全力研发 MeeGo 或 开始大规模使用Android",
-    gap: "仍有翻盘机会，可能保持 10% ~ 15% 市场份额"
+    gap: "仍有翻盘机会，可能保持15%左右市场份额"
   },
   {
     time: "2011",
