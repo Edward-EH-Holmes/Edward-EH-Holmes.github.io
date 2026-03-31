@@ -192,6 +192,23 @@
     body { background: #fff; }
     .page-wrapper { box-shadow: none; padding: 30px; }
   }
+  /* 下载按钮 */
+  .download-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background: #2c5282;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .download-btn:hover {
+    background: #1a3a6b;
+    text-decoration: none;
+    color: #fff;
+  }
 </style>
 </head>
 <body>
@@ -207,6 +224,11 @@
     </div>
     <div class="affiliation">Google Brain / Google Research / 多伦多大学</div>
     <div class="conference-tag">NIPS 2017 · Long Beach, CA, USA</div>
+  </div>
+  <div style="text-align: center; margin: 15px 0;">
+    <a href="./Paper/1706.03762v7.pdf" download="Attention_Is_All_You_Need.pdf" class="download-btn">
+      📄 下载论文原文
+    </a>
   </div>
 
   <!-- 目录 -->
