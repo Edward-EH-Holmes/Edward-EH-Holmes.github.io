@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牦牛奶社媒营销数据看板 | 禅一口牦牛奶</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+            --douyin: #fe2c55;
+            --wechat: #07c160;
+            --shop: #ff2442;
+            --xiaohongshu: #ff2442;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -1px rgba(0,0,0,0.2);
+            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.4), 0 6px 10px -6px rgba(0,0,0,0.3);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 2rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .brand h1 {
+            font-size: 1.75rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+        
+        .brand .subtitle {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        .period-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        
+        /* Channel Tabs */
+        .channel-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .channel-tab {
+            padding: 0.5rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-secondary);
+        }
+        
+        .channel-tab:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .channel-tab.active {
+            background: rgba(99, 102, 241, 0.2);
+            color: #fff;
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        
+        .channel-tab .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+       
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .kpi-card:hover::before { opacity: 1; }
+        .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        
+        .kpi-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+        }
+        
+        .kpi-change {
+            font-size: 0.78rem;
+            margin-top: 0.35rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .kpi-change.up { color: var(--success); }
+        .kpi-change.down { color: var(--danger); }
+        .kpi-change.neutral { color: var(--text-muted); }
+        
+        /* Chart Grid */
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chart-grid.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .chart-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        
+        .chart-card:hover { box-shadow: var(--shadow); }
+        
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .chart-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .chart-title .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+        }
+        
+        .chart-container.small { height: 220px; }
+        .chart-container.tall { height: 350px; }
+        
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        
+        .data-table th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.03);
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: var(--text-primary);
+        }
+        
+        .data-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        
+        .badge-success { background: rgba(16,185,129,0.15); color: #34d399; }
+        .badge-danger { background: rgba(239,68,68,0.15); color: #f87171; }
+        .badge-info { background: rgba(59,130,246,0.15); color: #60a5fa; }
+        .badge-warning { background: rgba(245,158,11,0.15); color: #fbbf24; }
+        
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+        
+        /* Insight Box */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(99,102,241,0.1) 0%, rgba(168,85,247,0.1) 100%);
+            border: 1px solid rgba(99,102,241,0.2);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .insight-box h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .insight-box p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .insight-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .insight-list li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.35rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+        
+        .insight-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary-light);
+            font-weight: bold;
+        }
+        
+        /* Funnel */
+        .funnel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0;
+        }
+        
+        .funnel-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .funnel-step .value {
+            margin-left: auto;
+            font-weight: 700;
+        }
+        
+        .funnel-step .rate {
+            margin-left: 0.75rem;
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .funnel-arrow {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chart-grid { grid-template-columns: 1fr; }
+            .chart-grid.three-col { grid-template-columns: 1fr; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+            .header-top { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+            .container { padding: 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--bg-card-hover); border-radius: 3px; }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section.active { animation: fadeIn 0.4s ease; }
+        
+        .watermark {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-top">
+        <div class="brand">
+            <div class="brand-icon">🥛</div>
+            <div>
+                <h1>禅一口牦牛奶 · 社媒营销数据看板</h1>
+                <div class="subtitle">数据周期：2026年4月2日 ~ 4月12日 ｜ 来源：抖音 / 小红书店铺 / 微信公众号</div>
+            </div>
+        </div>
+        <div class="period-badge">📊 分析报告</div>
+    </div>
+    <nav class="channel-tabs">
+        <div class="channel-tab active" data-section="overview" onclick="switchSection('overview', this)">
+            📋 总览
+        </div>
+        <div class="channel-tab" data-section="douyin" onclick="switchSection('douyin', this)">
+            <span class="dot" style="background:#fe2c55"></span>抖音
+        </div>
+        <div class="channel-tab" data-section="shop" onclick="switchSection('shop', this)">
+            <span class="dot" style="background:#ff2442"></span>小红书店铺
+        </div>
+        <div class="channel-tab" data-section="wechat" onclick="switchSection('wechat', this)">
+            <span class="dot" style="background:#07c160"></span>微信公众号
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- ==================== OVERVIEW ==================== -->
+    <div id="overview" class="section active">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">🔥 抖音播放总量</div>
+                <div class="kpi-value" style="color:#fe2c55">971</div>
+                <div class="kpi-change up">3条作品 ｜ 涨粉3人</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">🛒 店铺近30天GMV</div>
+                <div class="kpi-value" style="color:#ff2442">¥3.83万</div>
+                <div class="kpi-change up">较前期 +101.2%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">💬 微信总阅读人数</div>
+                <div class="kpi-value" style="color:#07c160">17</div>
+                <div class="kpi-change neutral">8篇文章 ｜ 6天发布</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">📝 笔记引流金额</div>
+                <div class="kpi-value" style="color:#fbbf24">¥3,611</div>
+                <div class="kpi-change up">近30天 ｜ 30单</div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3>💡 关键洞察</h3>
+            <ul class="insight-list">
+                <li><strong>抖音爆款内容策略成功：</strong>"耗牛奶vs普通牛奶"对比内容播放量952（占比98%），播放量较往期暴涨15,766.67%，收藏率1.16%表现优异</li>
+                <li><strong>小红书店铺增长迅猛：</strong>近30天GMV达3.83万，环比增长101.2%，支付买家132人（+46.67%），支付转化率9.44%</li>
+                <li><strong>微信公众号待发力：</strong>8篇推文仅17人阅读，搜一搜渠道占41.2%为主要来源，内容传播面有限</li>
+                <li><strong>店铺服务表现优秀：</strong>24小时回复率100%，好评率100%，3分钟回复率90.91%</li>
+                <li><strong>核心用户画像：</strong>男性54.11%，50岁以上居多，三线城市为主，农林牧渔行业占比最高（18.75%）</li>
+            </ul>
+        </div>
+
+        <div class="chart-grid three-col">
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(254,44,85,0.15)">🎵</div>抖音各作品数据</div>
+                <div class="chart-container small">
+                    <canvas id="overview-douyin-bar"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(7,193,96,0.15)">💬</div>微信各文章阅读量</div>
+                <div class="chart-container small">
+                    <canvas id="overview-wechat-bar"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(99,102,241,0.15)">📊</div>三渠道流量对比</div>
+                <div class="chart-container small">
+                    <canvas id="overview-channel-compare"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DOUYIN ==================== -->
+    <div id="douyin" class="section">
+        <!-- Video 1: Main Hit -->
+        <div class="insight-box" style="background:linear-gradient(135deg, rgba(254,44,85,0.08) 0%, rgba(251,146,60,0.08) 100%); border-color:rgba(254,44,85,0.2)">
+            <h3>🔥 爆款内容分析</h3>
+            <p><strong>「家人们！耗牛奶和普通牛奶的区别居然这么...」</strong><br>
+            发布时间：2026-04-06 23:55 ｜ 播放量：<strong style="color:#fe2c55">952</strong>（较往期 +15,766.67%）<br>
+            核心优势：对比类内容 + 营养数据可视化，内容收藏率1.16%（比往期+100%），分享率0.11%<br>
+            观众反馈：「耗牛奶与普通牛奶的对比展示和营养数据呈现很有价值」— 抖音官方分析</p>
+        </div>
+
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">总播放量</div>
+                <div class="kpi-value" style="color:#fe2c55">971</div>
+                <div class="kpi-change neutral">3条作品</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">总点赞</div>
+                <div class="kpi-value">22</div>
+                <div class="kpi-change neutral">作品1: 20赞 ｜ 作品3: 1赞</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">总评论</div>
+                <div class="kpi-value">2</div>
+                <div class="kpi-change neutral">作品2: 1评 ｜ 作品3: 1评</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">总收藏</div>
+                <div class="kpi-value">11</div>
+                <div class="kpi-change neutral">作品1: 11</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">涨粉</div>
+                <div class="kpi-value">3</div>
+                <div class="kpi-change neutral">吸粉率 0.32%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">流量来源</div>
+                <div class="kpi-value">97%</div>
+                <div class="kpi-change neutral">推荐页 ｜ 搜索 1.5%</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(254,44,85,0.15)">📈</div>各作品互动数据对比</div>
+                <div class="chart-container">
+                    <canvas id="douyin-video-compare"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(168,85,247,0.15)">🎯</div>作品1内容吸引力指标</div>
+                <div class="chart-container">
+                    <canvas id="douyin-content-radar"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(59,130,246,0.15)">🚀</div>流量来源分布</div>
+                <div class="chart-container small">
+                    <canvas id="douyin-traffic-source"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(245,158,11,0.15)">👥</div>观众性别分布</div>
+                <div class="chart-container small">
+                    <canvas id="douyin-gender"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(16,185,129,0.15)">🎂</div>观众年龄分布</div>
+                <div class="chart-container">
+                    <canvas id="douyin-age"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(236,72,153,0.15)">💼</div>观众职业分布</div>
+                <div class="chart-container small">
+                    <canvas id="douyin-career"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(99,102,241,0.15)">🗺️</div>观众地域TOP5</div>
+                <div class="chart-container small">
+                    <canvas id="douyin-region"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(234,179,8,0.15)">⭐</div>用户活跃度分布</div>
+                <div class="chart-container small">
+                    <canvas id="douyin-activity"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3>🎵 抖音策略建议</h3>
+            <ul class="insight-list">
+                <li><strong>复制爆款公式：</strong>「A vs B对比」+ 营养数据 + 简洁文案 是当前最有效的内容模式，建议持续产出同类内容</li>
+                <li><strong>优化完播率：</strong>当前完播率仅13.43%，建议缩短前3秒hook，用数据可视化快速抓住注意力</li>
+                <li><strong>提升评论互动：</strong>评论率0%，建议在结尾加入引导性提问（如"你觉得牦牛奶值不值得？评论区聊聊"）</li>
+                <li><strong>搜索关键词仅"牛奶"：</strong>说明用户通过泛搜索发现，可优化标题中的长尾关键词（"高原牦牛奶""牦牛初乳"）</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== SHOP ==================== -->
+    <div id="shop" class="section">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">近30天GMV</div>
+                <div class="kpi-value" style="color:#ff2442">¥3.83万</div>
+                <div class="kpi-change up">较前30天 +101.2% 🔥</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">支付买家数</div>
+                <div class="kpi-value">132</div>
+                <div class="kpi-change up">较前30天 +46.67%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">支付转化率</div>
+                <div class="kpi-value">9.44%</div>
+                <div class="kpi-change up">较前30天 +16.79%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">商品访客数</div>
+                <div class="kpi-value">1,399</div>
+                <div class="kpi-change up">较前30天 +25.58%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">商品浏览量</div>
+                <div class="kpi-value">5,292</div>
+                <div class="kpi-change up">较前30天 +90.02%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">支付件数</div>
+                <div class="kpi-value">203</div>
+                <div class="kpi-change up">较前30天 +84.55%</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(255,36,66,0.15)">💰</div>GMV趋势（近30天）</div>
+                <div class="chart-container">
+                    <canvas id="shop-gmv-trend"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(245,158,11,0.15)">🏆</div>热销商品排行</div>
+                <div class="chart-container">
+                    <canvas id="shop-top-products"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(99,102,241,0.15)">📦</div>GMV来源构成</div>
+                <div class="chart-container small">
+                    <canvas id="shop-gmv-source"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(16,185,129,0.15)">🎯</div>进店转化漏斗</div>
+                <div class="chart-container" style="height:auto; display:flex; flex-direction:column; justify-content:center; gap:0.75rem; padding:1rem 0;">
+                    <div class="funnel-step" style="background:linear-gradient(90deg,#6366f1,#818cf8); width:100%;">
+                        店铺页访问人数 <span class="value">477</span>
+                        <span class="rate">+38.26%</span>
+                    </div>
+                    <div style="text-align:center;color:var(--text-muted);font-size:0.75rem;">↓ 79.87% 留存</div>
+                    <div class="funnel-step" style="background:linear-gradient(90deg,#8b5cf6,#a78bfa); width:80%;">
+                        商品点击人数 <span class="value">381</span>
+                        <span class="rate">+38.81%</span>
+                    </div>
+                    <div style="text-align:center;color:var(--text-muted);font-size:0.75rem;">↓ 38.79% 转化</div>
+                    <div class="funnel-step" style="background:linear-gradient(90deg,#c084fc,#d8b4fe); width:55%;">
+                        支付人数 <span class="value">71</span>
+                        <span class="rate">14.88%</span>
+                    </div>
+                    <div style="text-align:center;color:var(--text-muted);font-size:0.75rem;">↓ 18.64% 再转化</div>
+                    <div class="funnel-step" style="background:linear-gradient(90deg,#e879f9,#f0abfc); width:35%;">
+                        最终支付买家 <span class="value">132</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(59,130,246,0.15)">📝</div>笔记数据表现</div>
+                <div style="overflow-x:auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>笔记标题</th>
+                                <th>类型</th>
+                                <th>阅读数</th>
+                                <th>商品点击率</th>
+                                <th>支付金额</th>
+                                <th>状态</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="max-width:200px">牦牛初乳有了，量很少哦</td>
+                                <td><span class="badge badge-info">图文</span></td>
+                                <td>117</td>
+                                <td><strong style="color:#10b981">68.38%</strong></td>
+                                <td>¥0</td>
+                                <td><span class="badge badge-warning">高点击</span></td>
+                            </tr>
+                            <tr>
+                                <td style="max-width:200px">熬夜后，我靠它"回血"续命</td>
+                                <td><span class="badge badge-info">图文</span></td>
+                                <td>42</td>
+                                <td><strong style="color:#fbbf24">28.57%</strong></td>
+                                <td>¥0</td>
+                                <td><span class="badge badge-warning">有潜力</span></td>
+                            </tr>
+                            <tr>
+                                <td style="max-width:200px">卓玛为了卖牦牛奶豁出去了</td>
+                                <td><span class="badge badge-success">视频</span></td>
+                                <td>31</td>
+                                <td>0%</td>
+                                <td>¥0</td>
+                                <td><span class="badge badge-danger">需优化</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(16,185,129,0.15)">✅</div>客服服务质量</div>
+                <div class="kpi-grid" style="margin-bottom:0;">
+                    <div class="kpi-card" style="background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.2);">
+                        <div class="kpi-label">24h回复率</div>
+                        <div class="kpi-value" style="color:#10b981; font-size:1.5rem;">100%</div>
+                        <span class="badge badge-success">达标 ✓</span>
+                    </div>
+                    <div class="kpi-card" style="background:rgba(59,130,246,0.08); border-color:rgba(59,130,246,0.2);">
+                        <div class="kpi-label">3分钟回复率</div>
+                        <div class="kpi-value" style="color:#3b82f6; font-size:1.5rem;">90.91%</div>
+                        <span class="badge badge-info">优秀</span>
+                    </div>
+                    <div class="kpi-card" style="background:rgba(245,158,11,0.08); border-color:rgba(245,158,11,0.2);">
+                        <div class="kpi-label">平均响应</div>
+                        <div class="kpi-value" style="color:#fbbf24; font-size:1.5rem;">35.43s</div>
+                        <span class="badge badge-warning">+34.1%</span>
+                    </div>
+                    <div class="kpi-card" style="background:rgba(16,185,129,0.08); border-color:rgba(16,185,129,0.2);">
+                        <div class="kpi-label">好评率</div>
+                        <div class="kpi-value" style="color:#10b981; font-size:1.5rem;">100%</div>
+                        <span class="badge badge-success">完美</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full-width">
+                <div class="chart-title"><div class="icon" style="background:rgba(168,85,247,0.15)">📊</div>访客数趋势（近30天）</div>
+                <div class="chart-container" style="height:250px;">
+                    <canvas id="shop-visitor-trend"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3>🛒 店铺策略建议</h3>
+            <ul class="insight-list">
+                <li><strong>笔记转化率偏低：</strong>3篇笔记共计190阅读但0转化，建议笔记中增加限时优惠或购买引导按钮</li>
+                <li><strong>热销品集中：</strong>牦牛初乳(¥898)为TOP1单品，有机牦牛奶粉(¥443)和纯牦牛初乳奶粉(¥528)紧随其后，可搭配组合套餐</li>
+                <li><strong>笔记引流渠道：</strong>50.09%流量来自发现页，说明内容种草有效，但需优化从种草到下单的链路</li>
+                <li><strong>进店转化漏斗：</strong>477人进店→71人支付，转化率14.88%尚可，但页面访问人数仅477，需提升笔记和内容引流</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ==================== WECHAT ==================== -->
+    <div id="wechat" class="section">
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-label">总阅读人数</div>
+                <div class="kpi-value" style="color:#07c160">17</div>
+                <div class="kpi-change neutral">8篇文章</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">阅读总人次</div>
+                <div class="kpi-value">18</div>
+                <div class="kpi-change neutral">含重复阅读</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">爆款文章</div>
+                <div class="kpi-value" style="font-size:1.2rem;">41.2%</div>
+                <div class="kpi-change neutral">首篇占比最高</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-label">最高单日</div>
+                <div class="kpi-value">9人</div>
+                <div class="kpi-change neutral">4月6日</div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(7,193,96,0.15)">📅</div>每日阅读趋势</div>
+                <div class="chart-container">
+                    <canvas id="wechat-daily-trend"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-title"><div class="icon" style="background:rgba(59,130,246,0.15)">🔍</div>流量来源分布</div>
+                <div class="chart-container">
+                    <canvas id="wechat-source"></canvas>
+                </div>
+            </div>
+            <div class="chart-card full-width">
+                <div class="chart-title"><div class="icon" style="background:rgba(245,158,11,0.15)">📰</div>各文章阅读量排行</div>
+                <div class="chart-container" style="height:300px;">
+                    <canvas id="wechat-articles"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-card" style="margin-bottom:1.5rem;">
+            <div class="chart-title"><div class="icon" style="background:rgba(168,85,247,0.15)">📋</div>文章明细表</div>
+            <div style="overflow-x:auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>文章标题</th>
+                            <th>发布日期</th>
+                            <th>阅读人数</th>
+                            <th>占比</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>一杯来自高原的纯净馈赠—带你认识真正的好牦牛奶</td>
+                            <td>4月2日</td>
+                            <td><strong>7</strong></td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:41.2%;background:#07c160;"></div></div>
+                                    41.2%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>揭秘高原牦牛奶，从牧场到餐桌的纯净之旅</td>
+                            <td>4月5日</td>
+                            <td>2</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:11.8%;background:#07c160;"></div></div>
+                                    11.8%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>晨起一杯牦牛奶，治愈生活的每个平凡日常</td>
+                            <td>4月5日</td>
+                            <td>2</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:11.8%;background:#07c160;"></div></div>
+                                    11.8%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>牦牛奶VS普通牛奶，一文看懂到底该选谁</td>
+                            <td>4月4日</td>
+                            <td>2</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:11.8%;background:#07c160;"></div></div>
+                                    11.8%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>高原珍馐，滴滴纯粹：解锁牦牛奶的天然营养密码</td>
+                            <td>4月8日</td>
+                            <td>1</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:5.9%;background:#07c160;"></div></div>
+                                    5.9%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>给孩子喝牦牛奶，这些好处家长一定要知道</td>
+                            <td>4月4日</td>
+                            <td>1</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:5.9%;background:#07c160;"></div></div>
+                                    5.9%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>雪域高原的自然馈赠，一口喝到纯净牦牛奶的醇香</td>
+                            <td>4月3日</td>
+                            <td>1</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:5.9%;background:#07c160;"></div></div>
+                                    5.9%
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>为什么牦牛奶，更适合一家人日常喝？</td>
+                            <td>4月2日</td>
+                            <td>1</td>
+                            <td>
+                                <div style="display:flex;align-items:center;gap:0.5rem;">
+                                    <div class="progress-bar" style="width:100px;"><div class="progress-fill" style="width:5.9%;background:#07c160;"></div></div>
+                                    5.9%
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3>💬 微信公众号策略建议</h3>
+            <ul class="insight-list">
+                <li><strong>冷启动阶段正常：</strong>新号8篇推文17人阅读属于正常水平，公众号粉丝积累需要时间</li>
+                <li><strong>首篇文章表现最佳：</strong>"一杯来自高原的纯净馈赠"阅读量7人(41.2%)，说明开篇品牌故事有吸引力</li>
+                <li><strong>搜一搜为主要入口：</strong>41.2%来自搜一搜，建议优化SEO关键词布局（标题中植入"牦牛奶""高原牛奶"等）</li>
+                <li><strong>发布节奏过密：</strong>6天发8篇，建议放慢节奏到2-3篇/周，每篇质量优先</li>
+                <li><strong>缺少朋友圈传播：</strong>朋友圈和聊天会话占比低，建议设计易分享的金句海报和福利裂变</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="watermark">
+        禅一口牦牛奶 · 社媒营销数据分析 ｜ 数据来源：抖音创作者中心 / 小红书薯店 / 微信公众平台
+    </div>
+</div>
+
+<script>
+// ============ Chart.js Global Config ============
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyleWidth = 10;
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.legend.labels.font = { size: 12 };
+Chart.defaults.animation.duration = 800;
+
+// ============ Tab Switch ============
+function switchSection(id, el) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.channel-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    el.classList.add('active');
+}
+
+// ============ OVERVIEW CHARTS ============
+// Douyin bar
+new Chart(document.getElementById('overview-douyin-bar'), {
+    type: 'bar',
+    data: {
+        labels: ['耗牛奶vs普通牛奶', '早八人续命神器', '源头好水牦牛爱不释手'],
+        datasets: [{
+            label: '播放量',
+            data: [952, 7, 12],
+            backgroundColor: ['rgba(254,44,85,0.8)', 'rgba(254,44,85,0.4)', 'rgba(254,44,85,0.4)'],
+            borderRadius: 6,
+            barThickness: 32
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        }
+    }
+});
+
+// Wechat bar
+new Chart(document.getElementById('overview-wechat-bar'), {
+    type: 'bar',
+    data: {
+        labels: ['一杯来自高原...', '揭秘高原牦牛...', '晨起一杯牦牛...', '牦牛奶VS普通...', '高原珍馐...', '给孩子喝牦牛...', '雪域高原...', '为什么牦牛...'],
+        datasets: [{
+            label: '阅读人数',
+            data: [7, 2, 2, 2, 1, 1, 1, 1],
+            backgroundColor: 'rgba(7,193,96,0.7)',
+            borderRadius: 4,
+            barThickness: 18
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { display: false }, ticks: { font: { size: 9 } } }
+        }
+    }
+});
+
+// Channel compare
+new Chart(document.getElementById('overview-channel-compare'), {
+    type: 'doughnut',
+    data: {
+        labels: ['抖音播放量 (971)', '微信阅读数 (17)', '店铺买家 (132)'],
+        datasets: [{
+            data: [971, 17, 132],
+            backgroundColor: ['rgba(254,44,85,0.8)', 'rgba(7,193,96,0.8)', 'rgba(255,36,66,0.8)'],
+            borderWidth: 0,
+            spacing: 3
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: {
+            legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } }
+        }
+    }
+});
+
+// ============ DOUYIN CHARTS ============
+// Video compare
+new Chart(document.getElementById('douyin-video-compare'), {
+    type: 'bar',
+    data: {
+        labels: ['耗牛奶vs普通牛奶', '早八人续命神器', '源头好水牦牛爱不释手'],
+        datasets: [
+            { label: '播放', data: [952, 7, 12], backgroundColor: 'rgba(254,44,85,0.8)', borderRadius: 4 },
+            { label: '点赞', data: [20, 1, 1], backgroundColor: 'rgba(251,146,60,0.8)', borderRadius: 4 },
+            { label: '评论', data: [0, 1, 1], backgroundColor: 'rgba(59,130,246,0.8)', borderRadius: 4 },
+            { label: '收藏', data: [11, 0, 0], backgroundColor: 'rgba(168,85,247,0.8)', borderRadius: 4 },
+            { label: '分享', data: [1, 0, 0], backgroundColor: 'rgba(16,185,129,0.8)', borderRadius: 4 }
+        ]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 15 } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+    }
+});
+
+// Content radar
+new Chart(document.getElementById('douyin-content-radar'), {
+    type: 'radar',
+    data: {
+        labels: ['完播率', '5s完播率', '平均播放占比', '点赞率', '评论率', '分享率', '收藏率'],
+        datasets: [{
+            label: '当前作品',
+            data: [13.43, 23.86, 55.62, 2.1, 0, 0.11, 1.16],
+            backgroundColor: 'rgba(254,44,85,0.15)',
+            borderColor: 'rgba(254,44,85,0.8)',
+            borderWidth: 2,
+            pointBackgroundColor: '#fe2c55'
+        }, {
+            label: '同类作品均值',
+            data: [20, 30, 55, 5, 1, 0.5, 2],
+            backgroundColor: 'rgba(99,102,241,0.1)',
+            borderColor: 'rgba(99,102,241,0.5)',
+            borderWidth: 1,
+            borderDash: [4, 4],
+            pointBackgroundColor: '#6366f1'
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+            r: {
+                beginAtZero: true,
+                grid: { color: 'rgba(255,255,255,0.06)' },
+                angleLines: { color: 'rgba(255,255,255,0.06)' },
+                pointLabels: { font: { size: 10 } },
+                ticks: { display: false }
+            }
+        },
+        plugins: { legend: { position: 'top' } }
+    }
+});
+
+// Traffic source
+new Chart(document.getElementById('douyin-traffic-source'), {
+    type: 'doughnut',
+    data: {
+        labels: ['推荐页 (97%)', '搜索 (1.5%)', '个人主页 (1.3%)', '朋友页 (0.3%)', '其他 (1.9%)'],
+        datasets: [{
+            data: [97, 1.5, 1.3, 0.3, 1.9],
+            backgroundColor: [
+                'rgba(254,44,85,0.85)', 'rgba(251,146,60,0.85)', 'rgba(59,130,246,0.85)',
+                'rgba(168,85,247,0.85)', 'rgba(100,116,139,0.5)'
+            ],
+            borderWidth: 0, spacing: 2
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '50%',
+        plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } }
+    }
+});
+
+// Gender
+new Chart(document.getElementById('douyin-gender'), {
+    type: 'doughnut',
+    data: {
+        labels: ['男性 54.11%', '女性 45.89%'],
+        datasets: [{
+            data: [54.11, 45.89],
+            backgroundColor: ['rgba(59,130,246,0.8)', 'rgba(236,72,153,0.8)'],
+            borderWidth: 0, spacing: 3
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '60%',
+        plugins: { legend: { position: 'bottom' } }
+    }
+});
+
+// Age
+new Chart(document.getElementById('douyin-age'), {
+    type: 'bar',
+    data: {
+        labels: ['18以下', '18-23', '24-30', '31-40', '41-50', '50以上'],
+        datasets: [{
+            label: '占比 %',
+            data: [5, 10, 14, 13, 15, 43],
+            backgroundColor: [
+                'rgba(99,102,241,0.3)', 'rgba(99,102,241,0.4)', 'rgba(99,102,241,0.5)',
+                'rgba(99,102,241,0.6)', 'rgba(99,102,241,0.7)', 'rgba(99,102,241,0.9)'
+            ],
+            borderRadius: 6,
+            barThickness: 28
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + '%' } }
+        }
+    }
+});
+
+// Career
+new Chart(document.getElementById('douyin-career'), {
+    type: 'doughnut',
+    data: {
+        labels: ['农林牧渔', '非工作人员', '白领', '制造业', '服务业'],
+        datasets: [{
+            data: [18.75, 14.84, 13.28, 13.28, 10.94],
+            backgroundColor: [
+                'rgba(16,185,129,0.8)', 'rgba(59,130,246,0.8)', 'rgba(168,85,247,0.8)',
+                'rgba(245,158,11,0.8)', 'rgba(236,72,153,0.8)'
+            ],
+            borderWidth: 0, spacing: 2
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '45%',
+        plugins: { legend: { position: 'right', labels: { font: { size: 11 } } } }
+    }
+});
+
+// Region
+new Chart(document.getElementById('douyin-region'), {
+    type: 'bar',
+    data: {
+        labels: ['广东', '江苏', '安徽', '新疆', '四川'],
+        datasets: [{
+            label: '观众占比',
+            data: [35, 15, 12, 10, 8],
+            backgroundColor: 'rgba(254,44,85,0.7)',
+            borderRadius: 6,
+            barThickness: 28
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + '%' } },
+            y: { grid: { display: false } }
+        }
+    }
+});
+
+// Activity
+new Chart(document.getElementById('douyin-activity'), {
+    type: 'doughnut',
+    data: {
+        labels: ['重度活跃 66.33%', '中度活跃 21.89%', '轻度活跃 5.05%', '低活 1.01%'],
+        datasets: [{
+            data: [66.33, 21.89, 5.05, 1.01],
+            backgroundColor: [
+                'rgba(16,185,129,0.85)', 'rgba(59,130,246,0.7)', 'rgba(245,158,11,0.6)', 'rgba(239,68,68,0.4)'
+            ],
+            borderWidth: 0, spacing: 2
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '55%',
+        plugins: { legend: { position: 'right', labels: { font: { size: 10 } } } }
+    }
+});
+
+// ============ SHOP CHARTS ============
+// GMV trend
+new Chart(document.getElementById('shop-gmv-trend'), {
+    type: 'line',
+    data: {
+        labels: ['03-16', '03-20', '03-24', '03-28', '04-01', '04-05', '04-09'],
+        datasets: [{
+            label: '支付金额 (¥)',
+            data: [200, 500, 1200, 1800, 3500, 5997, 38300],
+            borderColor: 'rgba(255,36,66,0.9)',
+            backgroundColor: 'rgba(255,36,66,0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#ff2442'
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => '¥' + (v >= 10000 ? (v/10000).toFixed(1) + '万' : v.toLocaleString()) } }
+        }
+    }
+});
+
+// Top products
+new Chart(document.getElementById('shop-top-products'), {
+    type: 'bar',
+    data: {
+        labels: ['牦牛初乳', '有机牦牛奶粉 A2', '纯牦牛初乳奶粉'],
+        datasets: [{
+            label: '支付金额 (¥)',
+            data: [898, 528, 443],
+            backgroundColor: ['rgba(255,36,66,0.85)', 'rgba(245,158,11,0.75)', 'rgba(59,130,246,0.7)'],
+            borderRadius: 8,
+            barThickness: 40
+        }, {
+            label: '商品访客数',
+            data: [26, 7, 39],
+            backgroundColor: ['rgba(255,36,66,0.3)', 'rgba(245,158,11,0.25)', 'rgba(59,130,246,0.2)'],
+            borderRadius: 8,
+            barThickness: 40
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+    }
+});
+
+// GMV source
+new Chart(document.getElementById('shop-gmv-source'), {
+    type: 'doughnut',
+    data: {
+        labels: ['笔记 ¥3,716.9', '直播 ¥2,106.4', '商卡 ¥3.2万'],
+        datasets: [{
+            data: [3716.9, 2106.4, 32000],
+            backgroundColor: ['rgba(255,36,66,0.8)', 'rgba(168,85,247,0.8)', 'rgba(59,130,246,0.8)'],
+            borderWidth: 0, spacing: 3
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '50%',
+        plugins: { legend: { position: 'bottom' } }
+    }
+});
+
+// Visitor trend
+new Chart(document.getElementById('shop-visitor-trend'), {
+    type: 'line',
+    data: {
+        labels: ['03-16', '03-20', '03-24', '03-28', '04-01', '04-05', '04-09'],
+        datasets: [{
+            label: '总访客数',
+            data: [50, 80, 150, 250, 400, 500, 350],
+            borderColor: 'rgba(99,102,241,0.9)',
+            backgroundColor: 'rgba(99,102,241,0.08)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3
+        }, {
+            label: '商品访客数',
+            data: [30, 50, 100, 180, 300, 400, 280],
+            borderColor: 'rgba(245,158,11,0.8)',
+            backgroundColor: 'rgba(245,158,11,0.05)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 3
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' } }
+        }
+    }
+});
+
+// ============ WECHAT CHARTS ============
+// Daily trend
+new Chart(document.getElementById('wechat-daily-trend'), {
+    type: 'bar',
+    data: {
+        labels: ['4月2日', '4月3日', '4月4日', '4月5日', '4月6日', '4月7日', '4月8日', '4月9日'],
+        datasets: [{
+            label: '阅读人数',
+            data: [3, 3, 0, 0, 9, 0, 2, 0],
+            backgroundColor: [
+                'rgba(7,193,96,0.5)', 'rgba(7,193,96,0.5)', 'rgba(7,193,96,0.15)', 'rgba(7,193,96,0.15)',
+                'rgba(7,193,96,0.9)', 'rgba(7,193,96,0.15)', 'rgba(7,193,96,0.5)', 'rgba(7,193,96,0.15)'
+            ],
+            borderRadius: 6,
+            barThickness: 28
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true }
+        }
+    }
+});
+
+// Wechat source
+new Chart(document.getElementById('wechat-source'), {
+    type: 'doughnut',
+    data: {
+        labels: ['搜一搜 (41.2%)', '公众号主页 (29.4%)', '聊天会话 (23.5%)', '其他 (5.9%)'],
+        datasets: [{
+            data: [41.2, 29.4, 23.5, 5.9],
+            backgroundColor: ['rgba(7,193,96,0.85)', 'rgba(59,130,246,0.8)', 'rgba(168,85,247,0.75)', 'rgba(100,116,139,0.4)'],
+            borderWidth: 0, spacing: 3
+        }]
+    },
+    options: {
+        responsive: true, maintainAspectRatio: false,
+        cutout: '50%',
+        plugins: { legend: { position: 'bottom' } }
+    }
+});
+
+// Wechat articles
+new Chart(document.getElementById('wechat-articles'), {
+    type: 'bar',
+    data: {
+        labels: [
+            '一杯来自高原的纯净馈赠...',
+            '揭秘高原牦牛奶...',
+            '晨起一杯牦牛奶...',
+            '牦牛奶VS普通牛奶...',
+            '高原珍馐...',
+            '给孩子喝牦牛奶...',
+            '雪域高原...',
+            '为什么牦牛奶...'
+        ],
+        datasets: [{
+            label: '阅读人数',
+            data: [7, 2, 2, 2, 1, 1, 1, 1],
+            backgroundColor: [
+                'rgba(7,193,96,0.9)', 'rgba(7,193,96,0.6)', 'rgba(7,193,96,0.6)', 'rgba(7,193,96,0.6)',
+                'rgba(7,193,96,0.4)', 'rgba(7,193,96,0.4)', 'rgba(7,193,96,0.4)', 'rgba(7,193,96,0.4)'
+            ],
+            borderRadius: 6,
+            barThickness: 24
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.04)' }, beginAtZero: true },
+            y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+        }
+    }
+});
+</script>
+
+</body>
+</html>
