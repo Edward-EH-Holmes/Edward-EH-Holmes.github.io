@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="./image/nokia.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>诺基亚兴亡录 — 领导力决策 (PPT)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="./CSS/fonts.css" rel="stylesheet">
+<style>
+/* ===== PPT CORE LAYOUT ===== */
+:root {
+  --blue: #005AFF;
+  --dark: #08080F;
+  --mid: #0F0F1A;
+  --card: #14141F;
+  --accent: #00D4FF;
+  --red: #FF3B30;
+  --gold: #FFD60A;
+  --gray: #8E8EA0;
+  --light: #E2E2EE;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--dark); color: var(--light); font-family: 'Noto Sans SC', sans-serif; font-size: 20px; }
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.5;
+}
+
+/* Slide Container */
+.slide-deck { width: 100%; height: 100%; position: relative; }
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 50px 70px;
+  background: var(--dark);
+}
+.slide.active { display: flex; }
+.slide.bg-mid { background: var(--mid); }
+
+/* Progress Bar */
+.ppt-progress {
+  position: fixed; top: 0; left: 0; height: 3px; z-index: 9999;
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  transition: width .35s cubic-bezier(.4,0,.2,1);
+}
+
+/* Slide Counter */
+.ppt-counter {
+  position: fixed; bottom: 20px; right: 32px; z-index: 9999;
+  font-family: 'Playfair Display', serif;
+  font-size: .78rem; color: var(--gray); letter-spacing: 2px;
+  background: rgba(8,8,15,.7); padding: 6px 16px; border-radius: 100px;
+  border: 1px solid rgba(0,90,255,.15);
+  backdrop-filter: blur(8px);
+}
+
+/* Nav Buttons */
+.ppt-nav {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999;
+  display: flex; gap: 12px; align-items: center;
+}
+.ppt-nav button {
+  background: rgba(0,90,255,.12); border: 1px solid rgba(0,90,255,.3);
+  color: var(--accent); font-size: .72rem; letter-spacing: 2px; text-transform: uppercase;
+  padding: 8px 22px; border-radius: 100px; cursor: pointer; transition: all .25s;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+.ppt-nav button:hover { background: rgba(0,90,255,.25); border-color: var(--accent); }
+.ppt-nav button:disabled { opacity: .3; cursor: default; }
+.ppt-nav button.fullscreen-btn { font-size: .9rem; padding: 8px 14px; }
+
+/* ===== SHARED CONTENT STYLES (from original) ===== */
+
+/* Section head */
+.sec-head { text-align: center; margin-bottom: 40px; }
+.sec-label { font-size: .68rem; letter-spacing: 6px; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 14px; }
+.sec-title { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem,4.5vw,3.2rem); font-weight: 700; color: #fff; line-height: 1.25; }
+.sec-desc { font-size: .9rem; color: var(--gray); line-height: 1.9; max-width: 640px; margin: 16px auto 0; }
+
+/* Era layout */
+.era-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.era-inner.rev { direction: rtl; }
+.era-inner.rev > * { direction: ltr; }
+
+/* Badge */
+.era-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: rgba(0,90,255,.12); border: 1px solid rgba(0,90,255,.35); border-radius: 100px; font-size: .7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.era-badge.red { background: rgba(255,59,48,.1); border-color: rgba(255,59,48,.3); color: var(--red); }
+.era-badge.gold { background: rgba(255,214,10,.1); border-color: rgba(255,214,10,.3); color: var(--gold); }
+
+/* Title */
+.era-title { font-family: 'Noto Serif SC', serif; font-size: clamp(1.6rem,3.5vw,2.5rem); font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 22px; }
+
+/* Paragraph */
+.era-p { color: var(--gray); line-height: 1.95; font-size: .93rem; margin-bottom: 14px; }
+.era-p strong { color: rgba(226,226,238,.9); font-weight: 600; }
+
+/* Highlight box */
+.hl-box { margin-top: 22px; padding: 22px 26px; border-radius: 12px; background: rgba(0,90,255,.07); border: 1px solid rgba(0,90,255,.2); }
+.hl-box.red { background: rgba(255,59,48,.06); border-color: rgba(255,59,48,.2); }
+.hl-box.gold { background: rgba(255,214,10,.06); border-color: rgba(255,214,10,.2); }
+.hl-label { font-size: .65rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.hl-box.red .hl-label { color: var(--red); }
+.hl-box.gold .hl-label { color: var(--gold); }
+.hl-box p { font-size: .88rem; color: rgba(226,226,238,.78); line-height: 1.85; }
+.hl-box p strong { color: rgba(226,226,238,.95); }
+
+/* Detail list */
+.detail-list { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.detail-item { display: flex; gap: 12px; align-items: flex-start; }
+.di-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-top: 7px; flex-shrink: 0; }
+.di-dot.red { background: var(--red); }
+.di-dot.gold { background: var(--gold); }
+.detail-item p { font-size: .87rem; color: var(--gray); line-height: 1.8; }
+.detail-item p strong { color: rgba(226,226,238,.85); }
+
+/* Phone image */
+.phone-stage { display: flex; justify-content: center; align-items: center; position: relative; min-height: 300px; }
+.phone-glow { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .25; pointer-events: none; }
+.phone-img { position: relative; z-index: 2; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.06); max-width: 240px; width: 100%; }
+.phone-img img { width: 100%; display: block; object-fit: cover; }
+.phone-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 18px; background: linear-gradient(to top, rgba(8,8,15,.95), transparent); font-size: .72rem; color: rgba(226,226,238,.7); letter-spacing: 1px; }
+.phone-caption strong { display: block; color: var(--accent); font-size: .8rem; margin-bottom: 2px; }
+
+/* Phone grids */
+.phone-grid-2g { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.phone-grid-2g .phone-img { max-width: 100%; }
+.symbian-phone-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.symbian-phone-grid .phone-img { max-width: 100%; }
+.symbian-phone-grid .phone-caption { font-size: .6rem; }
+.symbian-phone-grid .phone-caption strong { font-size: .66rem; }
+
+/* Lumia */
+.lumia-stage { display: flex; flex-direction: column; gap: 24px; }
+.lumia-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.lumia-row .phone-img { max-width: 145px; }
+
+/* WP row */
+.wp-row { display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(255,59,48,.04); border: 1px solid rgba(255,59,48,.15); border-radius: 16px; }
+.wp-box { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1; }
+.wp-logo { width: 76px; height: 76px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.wp-logo.wp7 { background: linear-gradient(135deg, #0063B1, #00A4EF); }
+.wp-logo.wp8 { background: linear-gradient(135deg, #0078D4, #00B4EF); }
+.wp-label { font-size: .68rem; color: var(--gray); text-align: center; line-height: 1.5; }
+.wp-arrow { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 0 14px; }
+.wp-cross { font-size: 2.8rem; color: var(--red); font-weight: 900; line-height: 1; text-shadow: 0 0 20px rgba(255,59,48,.6); }
+.wp-arrow-note { font-size: .56rem; color: var(--red); letter-spacing: 1px; text-align: center; margin-top: 2px; }
+
+/* Smart logos panel */
+.smart-left-panel { display: flex; flex-direction: column; }
+.smart-logos-top { display: flex; align-items: center; justify-content: center; gap: 22px; padding: 24px 16px; background: rgba(0,90,255,.05); border: 1px solid rgba(0,90,255,.15); border-radius: 14px 14px 0 0; border-bottom: none; }
+.smart-logo-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.smart-logo-name { font-size: .6rem; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+.smart-center-phone { display: flex; justify-content: center; align-items: flex-start; gap: 12px; padding: 18px 16px; background: rgba(255,255,255,.015); border-left: 1px solid rgba(0,90,255,.15); border-right: 1px solid rgba(0,90,255,.15); position: relative; }
+.smart-center-badge { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--accent), var(--blue)); color: #fff; font-size: .58rem; letter-spacing: 2px; padding: 3px 10px; border-radius: 20px; white-space: nowrap; font-weight: 600; text-transform: uppercase; z-index: 10; }
+.smart-chip-bottom { border-radius: 0 0 14px 14px; border: 1px solid rgba(255,59,48,.2); border-top: none; overflow: hidden; position: relative; background: #090810; min-height: 130px; }
+.smart-chip-bottom img { width: 100%; display: block; object-fit: cover; max-height: 170px; filter: brightness(.65) saturate(1.3); }
+.smart-chip-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,8,15,.97) 0%, rgba(8,8,15,.5) 55%, transparent 100%); display: flex; align-items: flex-end; padding: 16px 18px; }
+.smart-chip-text { font-size: .76rem; color: rgba(226,226,238,.85); line-height: 1.7; }
+.smart-chip-text .chip-title { color: var(--red); font-weight: 600; font-size: .8rem; display: block; margin-bottom: 4px; }
+
+/* Stats bar */
+.stats-bar { display: grid; grid-template-columns: repeat(4,1fr); background: var(--mid); border-top: 1px solid rgba(0,90,255,.2); border-bottom: 1px solid rgba(0,90,255,.2); border-radius: 16px; overflow: hidden; }
+.stat { padding: 40px 28px; text-align: center; border-right: 1px solid rgba(0,90,255,.12); }
+.stat:last-child { border-right: none; }
+.stat-n { font-family: 'Playfair Display', serif; font-size: clamp(2rem,3.5vw,3.2rem); font-weight: 700; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: block; margin-bottom: 6px; }
+.stat-l { font-size: .72rem; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; line-height: 1.5; }
+
+/* Crisis quote */
+.crisis { text-align: center; position: relative; overflow: hidden; }
+.crisis::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,59,48,.10) 0%, transparent 60%); pointer-events: none; }
+.crisis::before { content: '"'; position: absolute; top: -6rem; left: -1rem; font-family: 'Playfair Display', serif; font-size: 28rem; color: rgba(255,59,48,.04); pointer-events: none; line-height: 1; }
+.crisis-q { font-family: 'Noto Serif SC', serif; font-size: clamp(1.3rem,3vw,2rem); color: #fff; line-height: 1.7; max-width: 850px; margin: 0 auto 24px; }
+.crisis-src { font-size: .82rem; color: var(--red); letter-spacing: 2px; }
+
+/* Timeline */
+.tl-compact { display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; overflow-y: auto; }
+.tl-row { display: flex; gap: 16px; align-items: flex-start; padding: 10px 16px; background: rgba(0,90,255,.04); border-radius: 10px; border: 1px solid rgba(0,90,255,.1); }
+.tl-yr { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--accent); font-weight: 700; min-width: 52px; }
+.tl-yr.red { color: var(--red); }
+.tl-yr.gold { color: var(--gold); }
+.tl-yr.gray { color: var(--gray); }
+.tl-ev { font-size: .82rem; color: #fff; font-weight: 600; }
+.tl-d { font-size: .72rem; color: var(--gray); line-height: 1.6; }
+.tl-tag { display: inline-block; padding: 2px 8px; border-radius: 100px; font-size: .55rem; letter-spacing: 2px; text-transform: uppercase; margin-right: 6px; }
+.tag-r { background: rgba(0,212,255,.1); color: var(--accent); border: 1px solid rgba(0,212,255,.3); }
+.tag-p { background: rgba(255,214,10,.1); color: var(--gold); border: 1px solid rgba(255,214,10,.3); }
+.tag-f { background: rgba(255,59,48,.1); color: var(--red); border: 1px solid rgba(255,59,48,.3); }
+.tag-e { background: rgba(142,142,160,.1); color: var(--gray); border: 1px solid rgba(142,142,160,.3); }
+
+/* Failure cards */
+.fail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.fail-card { background: var(--card); padding: 36px; position: relative; overflow: hidden; }
+.fail-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--red); transition: height .45s; }
+.fail-card:hover::before { height: 100%; }
+.fail-card:hover { background: rgba(0,90,255,.06); }
+.fail-n { font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 700; color: rgba(255,59,48,.08); position: absolute; top: 10px; right: 18px; line-height: 1; }
+.fail-icon { font-size: 1.8rem; margin-bottom: 14px; }
+.fail-title { font-family: 'Noto Serif SC', serif; font-size: 1.15rem; color: #fff; margin-bottom: 14px; font-weight: 600; }
+.fail-body { font-size: .82rem; color: var(--gray); line-height: 1.9; }
+.fail-body strong { color: rgba(226,226,238,.85); }
+.fail-body p { margin-bottom: 6px; }
+
+/* Chance grid */
+.chance-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+.chance-card { background: var(--card); padding: 32px 24px; position: relative; overflow: hidden; transition: all .4s; }
+.chance-card:hover { background: rgba(255,59,48,.05); transform: translateY(-3px); }
+.chance-yr { font-family: 'Playfair Display', serif; font-size: 3.2rem; font-weight: 700; display: block; margin-bottom: 10px; line-height: 1; background: linear-gradient(135deg, #FF3B30 0%, #ff7b72 50%, #FFD60A 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; position: relative; }
+.chance-yr::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 38px; height: 3px; background: var(--red); border-radius: 2px; }
+.chance-title { font-size: .9rem; color: #fff; font-weight: 600; margin-top: 8px; }
+.chance-body { font-size: .78rem; color: var(--gray); line-height: 1.85; margin-top: 10px; }
+.chance-body strong { color: rgba(226,226,238,.8); }
+
+/* Counter grid */
+.counter-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+.counter-card { border-radius: 16px; padding: 32px 28px; background: rgba(0,90,255,.06); border: 1px solid rgba(0,90,255,.2); transition: all .4s; }
+.counter-card:hover { background: rgba(0,90,255,.12); border-color: rgba(0,212,255,.4); transform: translateY(-4px); }
+.counter-if { font-size: .62rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; display: block; }
+.counter-title { font-size: .95rem; color: #fff; font-weight: 600; margin-bottom: 12px; }
+.counter-body { font-size: .82rem; color: var(--gray); line-height: 1.85; }
+.counter-body strong { color: rgba(226,226,238,.85); }
+
+/* Compare grid */
+.cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.cmp-card { border-radius: 18px; padding: 40px; position: relative; overflow: hidden; }
+.cmp-card.apple { background: linear-gradient(135deg, rgba(0,212,255,.08), rgba(0,90,255,.04)); border: 1px solid rgba(0,212,255,.2); }
+.cmp-card.samsung { background: linear-gradient(135deg, rgba(255,214,10,.07), rgba(0,90,255,.04)); border: 1px solid rgba(255,214,10,.2); }
+.cmp-brand { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.cmp-sub { font-size: .7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 28px; }
+.apple .cmp-sub { color: var(--accent); }
+.samsung .cmp-sub { color: var(--gold); }
+.cmp-pt { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+.cmp-bullet { width: 5px; height: 5px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+.apple .cmp-bullet { background: var(--accent); }
+.samsung .cmp-bullet { background: var(--gold); }
+.cmp-pt p { font-size: .87rem; color: var(--gray); line-height: 1.8; }
+.cmp-pt p strong { color: rgba(226,226,238,.85); }
+
+/* Pills */
+.pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 40px auto; max-width: 950px; }
+.pill { padding: 12px 26px; background: rgba(0,90,255,.08); border: 1px solid rgba(0,90,255,.22); border-radius: 100px; font-size: .9rem; color: var(--light); transition: all .3s; cursor: default; }
+.pill:hover { background: rgba(0,90,255,.2); border-color: rgba(0,212,255,.45); color: #fff; transform: translateY(-3px); }
+
+/* Final quote */
+.final-quote { max-width: 820px; margin: 0 auto; font-family: 'Noto Serif SC', serif; font-size: clamp(.78rem,1.7vw,1.1rem); color: rgba(226,226,238,.7); line-height: 1.9; font-style: italic; }
+.yijing { margin-top: 36px; font-size: 1.05rem; color: var(--gold); letter-spacing: 4px; }
+
+/* QA cards */
+.qa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.qa-card { background: var(--dark); border-radius: 14px; padding: 36px; border: 1px solid rgba(0,90,255,.15); cursor: pointer; position: relative; overflow: hidden; }
+.qa-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,90,255,.08), transparent); opacity: 0; transition: opacity .4s; }
+.qa-card:hover::after { opacity: 1; }
+.qa-n { font-size: .72rem; color: var(--accent); letter-spacing: 3px; margin-bottom: 14px; display: block; }
+.qa-q { font-family: 'Noto Serif SC', serif; font-size: 1.05rem; color: #fff; line-height: 1.6; margin-bottom: 14px; }
+.qa-a { font-size: .85rem; color: var(--gray); line-height: 1.8; max-height: 0; overflow: hidden; transition: max-height .5s ease, opacity .4s; opacity: 0; }
+.qa-card.open .qa-a { max-height: 500px; opacity: 1; }
+.qa-a strong { color: rgba(226,226,238,.85); }
+.qa-hint { font-size: .68rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-top: 16px; display: block; }
+
+/* Refs */
+.refs-grid { display: grid; gap: 14px; }
+.ref-item { display: flex; gap: 18px; padding: 20px 24px; background: rgba(0,90,255,.04); border: 1px solid rgba(0,90,255,.12); border-radius: 10px; transition: all .3s; }
+.ref-item:hover { background: rgba(0,90,255,.08); border-color: rgba(0,212,255,.25); }
+.ref-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: rgba(0,212,255,.3); font-weight: 700; min-width: 28px; line-height: 1.2; }
+.ref-content { flex: 1; }
+.ref-author { font-size: .78rem; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+.ref-title { font-size: .85rem; color: rgba(226,226,238,.8); line-height: 1.7; margin-bottom: 4px; }
+.ref-source { font-size: .75rem; color: var(--gray); font-style: italic; }
+
+/* Thank you */
+.ty-title { font-family: 'Noto Serif SC', serif; font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900; line-height: 1.1; background: linear-gradient(150deg, #fff 0%, rgba(255,255,255,.6) 40%, var(--accent) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin: 12px 0 10px; }
+.ty-sub { font-size: 1rem; color: var(--gray); letter-spacing: 4px; text-transform: uppercase; font-weight: 300; }
+.ty-table { width: 100%; border-collapse: collapse; font-size: .88rem; margin-top: 30px; }
+.ty-table thead tr { background: rgba(0,90,255,.12); border-bottom: 2px solid rgba(0,212,255,.3); }
+.ty-table th { padding: 16px 24px; text-align: left; font-size: .68rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.ty-table th:last-child { text-align: left; }
+.ty-table tbody tr { border-bottom: 1px solid rgba(0,90,255,.1); }
+.ty-table tbody tr:hover { background: rgba(0,90,255,.06); }
+.ty-table tbody tr:last-child { border-bottom: none; }
+.ty-table td { padding: 18px 24px; color: var(--gray); line-height: 1.6; vertical-align: middle; }
+.ty-table td:first-child { color: rgba(226,226,238,.9); font-weight: 500; font-family: 'Noto Serif SC', serif; letter-spacing: 1px; }
+.ty-table td:nth-child(2) { color: var(--accent); font-size: .82rem; font-family: 'Playfair Display', serif; letter-spacing: 1px; }
+
+/* Decision table */
+.decision-table-wrap { border-radius: 14px; border: 1px solid rgba(0,90,255,.18); overflow: hidden; }
+.decision-table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+.decision-table thead tr { background: rgba(0,90,255,.14); border-bottom: 2px solid rgba(0,212,255,.28); }
+.decision-table th { padding: 16px 20px; text-align: left; font-size: .64rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.decision-table tbody tr { border-bottom: 1px solid rgba(0,90,255,.09); }
+.decision-table tbody tr:last-child { border-bottom: none; }
+.decision-table td { padding: 18px 20px; color: var(--gray); line-height: 1.65; vertical-align: top; }
+.decision-table td:first-child { color: rgba(226,226,238,.9); font-weight: 600; font-family: 'Playfair Display', serif; font-size: .95rem; white-space: nowrap; }
+.dt-real { color: rgba(255,59,48,.85) !important; }
+.dt-optimal { color: rgba(0,212,255,.85) !important; }
+.dt-gap { color: rgba(255,214,10,.82) !important; font-size: .82rem !important; }
+
+/* Rank cards */
+.rank-cards { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.rank-card { background: var(--card); border-radius: 16px; padding: 28px 36px 28px 52px; position: relative; overflow: hidden; }
+.rank-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 4px 0 0 4px; }
+.rank-card.rank-1::before { background: var(--gold); }
+.rank-card.rank-2::before { background: var(--accent); }
+.rank-card.rank-3::before { background: var(--gray); }
+.rank-card.rank-4::before { background: var(--red); }
+.rank-badge { position: absolute; top: 14px; left: 14px; font-family: 'Playfair Display', serif; font-size: .95rem; font-weight: 700; line-height: 1; }
+.rank-badge.gold { color: var(--gold); }
+.rank-badge.blue { color: var(--accent); }
+.rank-badge.gray { color: var(--gray); }
+.rank-badge.red { color: var(--red); }
+.rank-label { font-size: .6rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.rank-label.gold { color: var(--gold); }
+.rank-label.blue { color: var(--accent); }
+.rank-label.gray { color: var(--gray); }
+.rank-label.red { color: var(--red); }
+.rank-title { font-family: 'Noto Serif SC', serif; font-size: 1.05rem; color: #fff; font-weight: 600; margin-bottom: 10px; }
+.rank-body p { font-size: .82rem; color: var(--gray); line-height: 1.85; }
+.rank-sub-list { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.rank-sub-item { display: flex; align-items: flex-start; gap: 10px; font-size: .82rem; color: rgba(226,226,238,.72); line-height: 1.75; }
+.rank-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.rank-dot.gold { background: var(--gold); }
+.rank-dot.blue { background: var(--accent); }
+.rank-dot.gray { background: var(--gray); }
+.rank-dot.red { background: var(--red); }
+
+/* Chart cards */
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.chart-card { background: rgba(0,90,255,.05); border: 1px solid rgba(0,90,255,.2); border-radius: 16px; padding: 28px; }
+.chart-card-header { margin-bottom: 16px; }
+.chart-label { font-size: .62rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+.chart-title { font-family: 'Noto Serif SC', serif; font-size: 1rem; color: #fff; font-weight: 600; }
+.chart-sub { font-size: .76rem; color: var(--gray); margin-top: 4px; }
+.chart-body { display: flex; gap: 20px; align-items: flex-start; }
+.chart-canvas-wrap { flex: 1; min-width: 0; }
+.chart-canvas-wrap canvas { width: 100% !important; }
+.chart-legend { flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; padding-top: 4px; }
+
+/* Crisis extended cards */
+.crisis-card { border-radius: 16px; padding: 32px 28px; position: relative; overflow: hidden; }
+.crisis-card.moto { background: rgba(255,59,48,.05); border: 1px solid rgba(255,59,48,.2); }
+.crisis-card.kodak { background: rgba(255,214,10,.04); border: 1px solid rgba(255,214,10,.18); }
+
+/* Footer for thank-you slide */
+.ppt-footer { margin-top: auto; padding-top: 30px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,90,255,.15); font-size: .68rem; color: var(--gray); }
+.pft-brand { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; }
+.pft-group { font-size: .85rem; color: var(--gold); font-weight: 600; letter-spacing: 2px; }
+
+/* Scrollbar for overflow slides */
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: rgba(0,90,255,.3); border-radius: 4px; }
+
+/* Hero grid pulse */
+@keyframes gPulse { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+/* Responsive */
+@media (max-width: 960px) {
+  .slide { padding: 40px 30px; }
+  .era-inner, .era-inner.rev { grid-template-columns: 1fr; direction: ltr; gap: 30px; }
+  .stats-bar { grid-template-columns: repeat(2,1fr); }
+  .fail-grid, .cmp-grid, .qa-grid { grid-template-columns: 1fr; }
+  .chance-grid { grid-template-columns: repeat(2,1fr); }
+  .counter-grid { grid-template-columns: 1fr; }
+  .charts-grid { grid-template-columns: 1fr; }
+  .rank-card { padding: 22px 18px 22px 40px; }
+}
+</style>
+</head>
+<body>
+
+<div class="ppt-progress" id="pptProgress"></div>
+<div class="ppt-counter" id="pptCounter">1 / 30</div>
+
+<div class="ppt-nav">
+  <button id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+  <button class="fullscreen-btn" onclick="toggleFullscreen()" title="全屏">⛶</button>
+  <button id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+
+<div class="slide-deck" id="slideDeck">
+
+<!-- ==================== SLIDE 1: 封面 ==================== -->
+<div class="slide active" id="s1" style="background:radial-gradient(ellipse 90% 70% at 50% 30%, rgba(0,90,255,.18) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 85% 10%, rgba(0,212,255,.08) 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 15% 85%, rgba(255,59,48,.06) 0%, transparent 55%), var(--dark); text-align:center;">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(0,90,255,.06) 1px, transparent 1px),linear-gradient(90deg, rgba(0,90,255,.06) 1px, transparent 1px);background-size:70px 70px;opacity:.5;pointer-events:none;animation:gPulse 10s ease-in-out infinite;"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="sec-label">领导力决策课程 · 小组演讲</div>
+    <h1 class="sec-title" style="font-size:clamp(3.2rem,9vw,7.5rem);font-weight:900;line-height:1.03;background:linear-gradient(150deg, #fff 0%, rgba(255,255,255,.65) 45%, var(--accent) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:18px;">诺基亚兴亡录</h1>
+    <p style="font-size:clamp(.95rem,2.2vw,1.35rem);color:var(--gray);letter-spacing:2px;margin-bottom:48px;font-weight:300;">从北欧传奇到"燃烧平台"的警示</p>
+    <blockquote style="max-width:700px;font-size:1rem;line-height:1.9;color:rgba(226,226,238,.7);font-style:italic;border-left:3px solid var(--blue);padding-left:22px;text-align:left;margin:0 auto;">
+      如果我现在说："苹果公司的手机业务将会于5年后轰然倒塌。"此言一出，在座的诸位必定会说我疯了。然而，2007年的人们，看着如日中天的诺基亚时，也是这么想的。
+    </blockquote>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: 数据概览 ==================== -->
+<div class="slide" id="s2" style="justify-content:center;align-items:center;">
+  <div style="width:100%;max-width:1000px;">
+    <div class="sec-head">
+      <span class="sec-label">数据概览</span>
+      <h2 class="sec-title">帝国的一组数字</h2>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><span class="stat-n">40</span><span class="stat-l">巅峰全球市占率 %</span></div>
+      <div class="stat"><span class="stat-n">264</span><span class="stat-l">2005年出货量（百万部）</span></div>
+      <div class="stat"><span class="stat-n">72</span><span class="stat-l">微软收购价（亿美元）</span></div>
+      <div class="stat"><span class="stat-n">6</span><span class="stat-l">巅峰到出局（年）</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3: 1G时代 ==================== -->
+<div class="slide" id="s3">
+  <div class="era-inner">
+    <div>
+      <div class="era-badge">1G 时代 · 1980s</div>
+      <h2 class="era-title">摩托罗拉的王朝<br>与诺基亚的迷茫</h2>
+      <p class="era-p"><strong>摩托罗拉——当之无愧的王者</strong>：横跨手机和通信设备两大业务。1G技术使用模拟信号，于20世纪80年代（中国为1987年）正式商用，采用<strong>FDMA频分多址技术</strong>，特点是仅支持语音通话。</p>
+      <p class="era-p"><strong>诺基亚——百年历史的多元化工业集团</strong>：业务涵盖造纸、橡胶、电缆等多个领域。20世纪80年代末，诺基亚试图转型做消费电子产品，但由于盲目扩张和竞争加剧，亏损严重，<strong>甚至一度打算将手机业务出售给爱立信</strong>。</p>
+      <div class="hl-box red">
+        <span class="hl-label">🔥 摩托罗拉的战略泥潭：铱星计划</span>
+        <p>摩托罗拉全力投入耗资<strong>50亿美元</strong>的铱星计划，企图通过77颗低轨道卫星（后减为66颗）组建全球移动通信系统。这一技术奇迹最终成为商业灾难——<strong>3000美元一部的铱星手机</strong>和<strong>每分钟3–8美元</strong>的话费，让普通人望而却步。</p>
+      </div>
+    </div>
+    <div class="phone-stage">
+      <div class="phone-glow" style="width:220px;height:300px;background:rgba(0,90,255,.5);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      <div class="phone-img">
+        <img src="./image/Motorola DynaTAC 8000X.jpg" alt="Motorola DynaTAC 8000X" onerror="this.parentElement.style.background='#1a1a2e';this.style.display='none'">
+        <div class="phone-caption"><strong>Motorola DynaTAC 8000X · 1983</strong>全球首款商用手机 · 重量约800克 · 售价3995美元</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: 2G崛起 ==================== -->
+<div class="slide bg-mid" id="s4">
+  <div class="era-inner rev">
+    <div>
+      <div class="era-badge">2G 时代 · 1991–1998</div>
+      <h2 class="era-title">王朝更迭<br>诺基亚六年登顶</h2>
+      <p class="era-p">进入2G时代，电子信号由模拟转变为数字（<strong>GSM、TDMA和CDMA</strong>），网络不仅能打电话，还能传输数据。欧洲的2G技术起步最快——1991年，GSM技术在欧洲商业化。</p>
+      <p class="era-p">1992年，<strong>约玛·奥利拉出任诺基亚CEO</strong>，将公司更名为诺基亚电信公司。同年11月，诺基亚推出首款量产GSM手机——<strong>诺基亚1011</strong>（存储99个号码，通话90分钟，重量不足500克），极为惊艳，引发市场抢购。</p>
+      <p class="era-p">初战告捷后，诺基亚与德州仪器深化合作，于<strong>1994年10月发布搭载ARM芯片的诺基亚2110</strong>，支持短信功能，其搭载的经典铃声成为一代人的记忆。</p>
+      <div class="hl-box">
+        <span class="hl-label">📡 历史性时刻 · 1994 · 北京</span>
+        <p>诺基亚向北京电信提供中国内地第一个GSM商用网络系统，<strong>时任邮电部部长吴基传</strong>用这款诺基亚2110拨通了中国首个商业GSM通话。</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="phone-img" style="max-width:220px;margin:0 auto;">
+        <img src="./image/Nokia 1011.jpg" alt="Nokia 1011" onerror="this.style.minHeight='170px';this.style.background='#0a1628'">
+        <div class="phone-caption"><strong>Nokia 1011 · 1992</strong>首款量产GSM手机</div>
+      </div>
+      <div class="phone-img" style="max-width:220px;margin:0 auto;">
+        <img src="./image/Nokia 2110.jpg" alt="Nokia 2110" onerror="this.style.minHeight='130px';this.style.background='#0a1628'">
+        <div class="phone-caption"><strong>Nokia 2110 · 1994</strong>中国首个GSM通话 · 经典铃声</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: 壮士断腕 + 手机图片 ==================== -->
+<div class="slide bg-mid" id="s5">
+  <div class="era-inner">
+    <div>
+      <div class="era-badge gold">壮士断腕 · 1994</div>
+      <h2 class="era-title">奥利拉的豪赌</h2>
+      <div class="hl-box gold" style="margin-top:0">
+        <span class="hl-label">⚡ 壮士断腕 · 1994年奥利拉的豪赌</span>
+        <p>奥利拉说服董事会<strong>出售所有传统业务</strong>，全力专攻通信行业——放弃了自1865年成立以来129年的保命之本。市场立刻验证了他的远见：诺基亚1994年销售额增长<strong>38%</strong>，手机及通信电缆部门占集团净销售额的<strong>64%</strong>，帝国就此崛起。</p>
+      </div>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot"></div><p><strong>诺基亚9000 Communicator</strong>——商务旗舰，能发电邮和传真，折叠式全键盘设计，1996年发布</p></div>
+        <div class="detail-item"><div class="di-dot"></div><p><strong>诺基亚6110</strong>——搭载"贪食蛇"游戏，风靡全球，开启游戏手机时代</p></div>
+        <div class="detail-item"><div class="di-dot"></div><p><strong>诺基亚8110</strong>——"香蕉手机"，因《黑客帝国》而举世闻名，滑盖设计引领时尚</p></div>
+        <div class="detail-item"><div class="di-dot gold"></div><p><strong>1998年</strong>以市占率<strong>23%（销量1.63亿部）</strong>超越摩托罗拉（20%），登顶全球手机龙头，短短6年从"差点卖身"到世界霸主</p></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;justify-content:center;align-items:stretch;">
+      <!-- 左侧：8110 + 9000 上下排列 -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="phone-img" style="max-width:none;width:fit-content;">
+          <img src="./image/Nokia 8110.jpg" alt="Nokia 8110" style="width:auto;max-height:180px;object-fit:contain;" onerror="this.style.minHeight='140px';this.style.background='#0a1628'">
+          <div class="phone-caption"><strong>Nokia 8110 · 1996</strong>"香蕉手机"</div>
+        </div>
+        <div class="phone-img" style="max-width:none;width:fit-content;">
+          <img src="./image/Nokia 9000 Communicator.jpg" alt="Nokia 9000 Communicator" style="width:auto;max-height:180px;object-fit:contain;" onerror="this.style.minHeight='140px';this.style.background='#0a1628'">
+          <div class="phone-caption"><strong>Nokia 9000 · 1996</strong>商务旗舰</div>
+        </div>
+      </div>
+      <!-- 右侧：6110 -->
+      <div style="display:flex;align-items:center;">
+        <div class="phone-img" style="max-width:none;width:fit-content;">
+          <img src="./image/Nokia 6110.jpg" alt="Nokia 6110" style="width:auto;max-height:380px;object-fit:contain;" onerror="this.style.minHeight='140px';this.style.background='#0a1628'">
+          <div class="phone-caption"><strong>Nokia 6110 · 1997</strong>贪食蛇</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: 塞班巅峰 ==================== -->
+<div class="slide" id="s6">
+  <div class="era-inner">
+    <div>
+      <div class="era-badge gold">塞班时代 · 2002–2007</div>
+      <h2 class="era-title">智能机萌芽<br>诺基亚的全盛</h2>
+      <p class="era-p">2002年，诺基亚推出搭载<strong>Symbian OS V6.0的诺基亚7650</strong>，配备<strong>30万像素彩色摄像头和彩色屏幕</strong>，成功在智能手机市场建立主导地位。自此，<strong>"诺基亚+塞班+德州仪器"</strong>的组合在全球市场所向披靡。</p>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot gold"></div><p><strong>诺基亚9110</strong>——可扩展存储；<strong>诺基亚3650（塞班S60）</strong>——旋转键盘设计</p></div>
+        <div class="detail-item"><div class="di-dot gold"></div><p><strong>诺基亚6108</strong>——支持手写输入；<strong>诺基亚7200</strong>——首款翻盖手机</p></div>
+        <div class="detail-item"><div class="di-dot gold"></div><p><strong>诺基亚7610</strong>——首款百万级像素摄像头，开启移动摄影时代</p></div>
+        <div class="detail-item"><div class="di-dot gold"></div><p><strong>诺基亚1100</strong>——"一代神机"，累计销量<strong>2.5亿台</strong>，史上最畅销手机</p></div>
+      </div>
+      <div class="hl-box gold">
+        <span class="hl-label">👑 2005年全盛时刻</span>
+        <p>全年出货量达<strong>2.64亿部</strong>，是摩托罗拉的1.8倍。合作伙伴德州仪器也因此<strong>超越三星，成为全球第二大半导体供应商</strong>。为完全主导塞班，诺基亚持股比例接近<strong>50%</strong>。放眼全球，独孤求败——但危机悄然临近。</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <div class="phone-img" style="max-width:210px;box-shadow:0 0 40px rgba(255,214,10,.3),0 30px 80px rgba(0,0,0,.6)">
+        <img src="./image/Nokia 7650.jpg" alt="Nokia 7650" onerror="this.style.minHeight='240px';this.style.background='#1a1000'">
+        <div class="phone-caption"><strong>Nokia 7650 · 2002</strong>首款塞班智能手机 · 30万像素彩色摄像头</div>
+      </div>
+      <div class="symbian-phone-grid">
+        <div class="phone-img"><img src="./image/Nokia 3650.jpg" alt="Nokia 3650" onerror="this.style.minHeight='120px';this.style.background='#0d1520'"><div class="phone-caption"><strong>Nokia 3650</strong>旋转键盘</div></div>
+        <div class="phone-img"><img src="./image/Nokia 7610.jpg" alt="Nokia 7610" onerror="this.style.minHeight='120px';this.style.background='#0d1520'"><div class="phone-caption"><strong>Nokia 7610</strong>百万像素</div></div>
+        <div class="phone-img"><img src="./image/Nokia 1100.jpg" alt="Nokia 1100" onerror="this.style.minHeight='120px';this.style.background='#0d1520'"><div class="phone-caption"><strong>Nokia 1100</strong>"一代神机"，累计销量2.5亿台</div></div>
+        <div class="phone-img"><img src="./image/Nokia 7200.jpg" alt="Nokia 7200" onerror="this.style.minHeight='120px';this.style.background='#0d1520'"><div class="phone-caption"><strong>Nokia 7200</strong>首款翻盖</div></div>
+        <div class="phone-img"><img src="./image/Nokia 6108.jpg" alt="Nokia 6108" onerror="this.style.minHeight='120px';this.style.background='#0d1520'"><div class="phone-caption"><strong>Nokia 6108</strong>手写输入</div></div>
+        <div class="phone-img"><img src="./image/Nokia 9110.jpg" alt="Nokia 9110" onerror="this.style.minHeight='120px';this.style.background='#0d1520'"><div class="phone-caption"><strong>Nokia 9110</strong>可扩展存储</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7: 智能机冲击（上）==================== -->
+<div class="slide bg-mid" id="s7" style="background:linear-gradient(135deg,rgba(255,59,48,.05) 0%,var(--mid) 100%);">
+  <div class="era-inner rev">
+    <div>
+      <div class="era-badge red">智能机时代 · 2005–2010</div>
+      <h2 class="era-title">山雨欲来<br>五件改变世界的小事</h2>
+      <p class="era-p">2005年，几件看似微不足道的小事正在发生，但连起来看，预示着变革将至：</p>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>联发科（MediaTek）</strong>全力推广芯片业务，催生中国"山寨机"浪潮</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p>谷歌花<strong>5000万美元</strong>收购了一家名叫"安卓"的小公司</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p>史蒂夫·乔布斯正在向<strong>摩托罗拉学习造手机</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p>Apple与<strong>富士康郭台铭</strong>洽谈合作，正在开发一个新系统</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>3G时代</strong>正式到来</p></div>
+      </div>
+      <div class="hl-box red">
+        <span class="hl-label">📱 2007 · 上帝的手机</span>
+        <p>乔布斯从牛仔裤口袋掏出iPhone——搭载iOS系统、<strong>3.5英寸多点触控电容屏</strong>，被媒体誉为"上帝的手机"。大屏触摸屏并非iPhone首创，但苹果让此后大部分手机都"类iPhone"化。诺基亚CEO<strong>康培凯</strong>对此不以为然——然而iPhone发布次年，诺基亚销售额<strong>比预期低29%</strong>，苹果市值超越诺基亚。</p>
+      </div>
+    </div>
+    <div class="smart-left-panel">
+      <div class="smart-logos-top">
+        <div class="smart-logo-item"><img src="./image/MediaTek.png" alt="MediaTek" style="width:52px;height:auto;"><span class="smart-logo-name" style="color:rgba(232,74,53,.9)">MediaTek</span></div>
+        <div class="smart-logo-item"><img src="./image/Google.png" alt="Google" style="width:52px;height:auto;"><span class="smart-logo-name" style="color:rgba(66,133,244,.9)">Google</span></div>
+        <div class="smart-logo-item"><img src="./image/Apple.png" alt="Apple" style="width:52px;height:auto;"><span class="smart-logo-name" style="color:rgba(255,255,255,.7)">Apple</span></div>
+      </div>
+      <div class="smart-center-phone">
+        <div class="smart-center-badge">智能机时代的颠覆者</div>
+        <div class="phone-img" style="max-width:185px;box-shadow:0 0 60px rgba(0,212,255,.4),0 30px 80px rgba(0,0,0,.7);margin-top:20px;">
+          <img src="./image/iPhone 1.jpg" alt="iPhone 1" onerror="this.style.minHeight='260px';this.style.background='#0a1628'">
+          <div class="phone-caption"><strong>iPhone 1 · 2007</strong>重新定义智能手机 · "上帝的手机"</div>
+        </div>
+        <div class="phone-img" style="max-width:150px;">
+          <img src="./image/HTC Dream G1.jpg" alt="HTC Dream G1" onerror="this.style.minHeight='200px';this.style.background='#0a1628'">
+          <div class="phone-caption"><strong>HTC Dream G1 · 2008</strong>全球首款安卓手机</div>
+        </div>
+      </div>
+      <div class="smart-chip-bottom">
+        <div style="padding:20px 18px 18px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg,#c0392b,#8e1010);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="color:#fff;font-weight:900;font-size:.55rem;text-align:center;line-height:1.2;">FSL</span>
+            </div>
+            <div>
+              <div style="font-size:.8rem;color:var(--red);font-weight:600;margin-bottom:2px;">⚙️ 飞思卡尔 MXC300-30</div>
+              <div style="font-size:.65rem;color:var(--gray);letter-spacing:1px;">Freescale Semiconductor</div>
+            </div>
+          </div>
+          <div style="font-size:.8rem;color:rgba(226,226,238,.8);line-height:1.75;">
+            诺基亚利用MXC300-30处理器，发布 <strong style="color:var(--gold)">44款产品</strong>（E63、E71、E51……），被调侃为 <strong style="color:var(--red)">"科技以换壳为本"</strong>——换壳不换芯，创新停滞。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: 智能机冲击（下）==================== -->
+<div class="slide" id="s8" style="background:linear-gradient(135deg,rgba(255,59,48,.05) 0%,var(--mid) 100%);">
+  <div class="era-inner">
+    <div>
+      <div class="hl-box" style="margin-top:0">
+        <span class="hl-label">🤖 2008年9月23日 · 开放手机联盟（Open Handset Alliance）</span>
+        <p>谷歌联合<strong>三星、LG、索尼、HTC、摩托罗拉</strong>等十几家手机厂商，<strong>高通、博通、德州仪器</strong>等芯片商以及<strong>中国移动</strong>等公司，共同成立<strong>开放手机联盟（Open Handset Alliance）</strong>。<strong>HTC Dream</strong>——全球首款安卓手机发布，三星、索尼迅速跟进。</p>
+      </div>
+      <div class="hl-box red" style="margin-top:14px;">
+        <span class="hl-label">⚠️ 诺基亚在做什么？</span>
+        <p>一方面被批评为<strong>"科技以换壳为本"</strong>，利用飞思卡尔MXC300-30处理器发布44款缺乏创新产品；另一方面正与高通陷入<strong>专利诉讼泥潭</strong>，被迫签订15年专利授权协议，直接导致德州仪器退出手机核心应用处理器市场。</p>
+      </div>
+    </div>
+    <div>
+      <div class="era-badge red">塞班的困境 · 2008–2010</div>
+      <h2 class="era-title">塞班的三重困局<br>诺基亚的自我欺骗</h2>
+      <p class="era-p">塞班系统最大的问题不在芯片，而在系统本身：</p>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>开发者不友好</strong>：依赖qt框架，Java兼容性差，与iOS和Android相比开发难度大，编译时间长</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>体验全面落后</strong>：智能化程度和用户体验不如Android和iOS</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>高通专利围剿</strong>：诺基亚与高通公司被迫签订<strong>15年专利授权协议</strong>直接导致德州仪器退出手机芯片市场</p></div>
+      </div>
+      <div class="hl-box red">
+        <span class="hl-label">🤫 奥利拉的自白（回忆录《排除万难》）</span>
+        <p>公司高层当时知道需要比塞班更好的系统，也清楚研发需要数年时间。但他们<strong>害怕公开承认塞班技不如人</strong>，担心这会损害公司形象，动摇投资者和消费者的信心。于是，公司继续在这条"破船"上越走越偏。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: 诺基亚5800 + N9 ==================== -->
+<div class="slide" id="s9">
+  <div class="era-inner">
+    <div>
+      <div class="hl-box" style="margin-top:0">
+        <span class="hl-label">📱 2008年 · 诺基亚5800的教训</span>
+        <p>塞班首款触摸屏手机<strong>诺基亚5800</strong>姗姗来迟。虽比iPhone便宜100美元，但老旧的UI、按键机操作逻辑、<strong>不灵敏的电阻屏和单点触控</strong>，让消费者望而却步。</p>
+      </div>
+    </div>
+    <div>
+      <div class="era-badge" style="margin-top:20px">MeeGo · 最后的希望</div>
+      <h2 class="era-title" style="font-size:clamp(1.4rem,3vw,2rem)">Nokia N9<br>好评无数却生不逢时</h2>
+      <p class="era-p">2010年，诺基亚与英特尔合作开发<strong> MeeGo 操作系统</strong>。2011年，搭载 MeeGo 的<strong>诺基亚N9</strong>发布，凭借独特的设计和流畅体验赢得了不少口碑。</p>
+      <p class="era-p">但此刻，一场"<strong>特洛伊木马</strong>"正在上演——N9和 MeeGo 即将被战略性抛弃。</p>
+      <div class="phone-stage" style="min-height:280px;margin-top:20px;">
+        <div class="phone-glow" style="width:180px;height:260px;background:rgba(0,90,255,.4);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+        <div class="phone-img" style="max-width:240px;">
+          <img src="./image/Nokia N9.jpg" alt="Nokia N9" onerror="this.style.minHeight='280px';this.style.background='#001a30'">
+          <div class="phone-caption"><strong>Nokia N9 · 2011</strong>被放弃的 MeeGo 旗舰 · 口碑极佳却戛然而止</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: 历史转折点 ==================== -->
+<div class="slide bg-mid" id="s10" style="background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(255,59,48,.08) 0%,var(--mid) 70%);">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;">
+    <span class="sec-label" style="color:var(--red);margin-bottom:24px;">2010年第四季度</span>
+    <p class="crisis-q" style="font-size:clamp(1.6rem,4vw,2.8rem);line-height:1.6;">安卓市占率正式超越塞班。<br>帝国的城墙，轰然倒塌。</p>
+    <div class="crisis-src" style="margin-top:28px;">— 诺基亚的历史转折点</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: "特洛伊木马" ==================== -->
+<div class="slide" id="s11">
+  <div class="era-inner">
+    <div>
+      <div class="era-badge red">"特洛伊木马" · 2010–2013</div>
+      <h2 class="era-title">埃洛普的<br>致命三连决策</h2>
+      <p class="era-p">2010年，<strong>斯蒂芬·埃洛普</strong>上任诺基亚CEO——他曾是美国微软Office部门负责人。他上任后做出了一个争议巨大的决定：</p>
+      <div class="hl-box red">
+        <span class="hl-label">💣 否定三连</span>
+        <p>① <strong>立刻放弃</strong>已接近成熟的 MeeGo 操作系统<br>
+        ② <strong>拒绝</strong>与已成气候的安卓合作<br>
+        ③ 转而选择与微软结盟，<strong>押注 Windows Phone</strong></p>
+      </div>
+      <p class="era-p" style="margin-top:18px">2011年10月26日，<strong>诺基亚Lumia 800</strong>发布，全球首款Windows Phone手机。之后又发布Lumia 900、Lumia 920等机型，但最终反响平平。</p>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot red"></div><p>Windows Phone陷入<strong>"用户少→开发者少→应用少→用户更少"</strong>的恶性循环</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>Windows Phone 7</strong>无法升级到<strong>Windows Phone 8</strong>，背刺老用户，败坏路人缘</p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p>诺基亚自身<strong>研发能力持续萎缩、供应链整合乏力、硬件创新停滞不前</strong></p></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <div style="font-size:.63rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:8px;text-align:center;">Lumia 系列 · Windows Phone 押注</div>
+      <div class="lumia-row">
+        <div class="phone-img" style="max-width:145px;"><img src="./image/Lumia 800.jpg" alt="Nokia Lumia 800" onerror="this.style.minHeight='190px';this.style.background='#1a0a0a'"><div class="phone-caption"><strong>Lumia 800 · 2011</strong>首款WP</div></div>
+        <div class="phone-img" style="max-width:145px;"><img src="./image/Lumia 900.jpg" alt="Nokia Lumia 900" onerror="this.style.minHeight='190px';this.style.background='#1a0a0a'"><div class="phone-caption"><strong>Lumia 900 · 2012</strong>旗舰尝试</div></div>
+        <div class="phone-img" style="max-width:145px;"><img src="./image/Lumia 920.jpg" alt="Nokia Lumia 920" onerror="this.style.minHeight='190px';this.style.background='#1a0a0a'"><div class="phone-caption"><strong>Lumia 920 · 2012</strong>光学防抖</div></div>
+      </div>
+      <div class="wp-row">
+        <div class="wp-box"><div class="wp-logo wp7"><img src="./image/WP7.png" style="width:100px;height:auto;"></div><div class="wp-label">2010年发布<br><span style="color:var(--red);font-size:.65rem;">无法升级</span></div></div>
+        <div class="wp-arrow"><svg width="34" height="24" viewBox="0 0 34 24" fill="none"><path d="M4 12H30M20 4L30 12L20 20" stroke="#FF3B30" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="wp-cross">✗</div><div class="wp-arrow-note">系统断层<br>背刺用户</div></div>
+        <div class="wp-box"><div class="wp-logo wp8"><img src="./image/WP8.png" style="width:100px;height:auto;"></div><div class="wp-label">2012年发布<br><span style="color:var(--gray);font-size:.65rem;">生态失败</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 12: 脚踩两只船 & 燃烧平台（左右） ==================== -->
+<div class="slide bg-mid" id="s12">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;">
+    <!-- 左侧：脚踩两只船 -->
+    <div>
+      <div class="era-badge red">战略困境 · 2008–2010</div>
+      <h2 class="era-title">脚踩两只船<br>最终两头落空</h2>
+      <p class="era-p">回顾2008至2010年，诺基亚的战略困境体现为<strong>"脚踩两只船"</strong>——既想开发代表未来的 MeeGo，又无法放弃仍在贡献大量现金流的塞班。</p>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>现金牛的诱惑</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>内部生态阻力</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>误判转型时间</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>领导层犹豫不决</strong></p></div>
+      </div>
+    </div>
+    <!-- 右侧：孤注一掷的"燃烧平台" -->
+    <div>
+      <div class="era-badge red">战略死局 · 2011–2013</div>
+      <h2 class="era-title">孤注一掷的"燃烧平台"<br>与生态陷阱</h2>
+      <p class="era-p">2011年初，新任CEO斯蒂芬·埃洛普发出著名的<strong>"燃烧平台"备忘录</strong>，声称诺基亚犹如置身燃烧的石油平台，必须冒险一跃。然而，这一跃并未跳向生机，而是坠入了更深的战略陷阱。</p>
+      <div class="detail-list">
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>致命转向</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>生态陷阱</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>能力瓦解</strong></p></div>
+        <div class="detail-item"><div class="di-dot red"></div><p><strong>终局已定</strong></p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13: 终局 ==================== -->
+<div class="slide bg-mid" id="s13" style="background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(255,59,48,.06) 0%,var(--mid) 70%);">
+  <div style="display:flex;align-items:center;justify-content:center;height:100%;">
+    <div style="text-align:center;padding:50px 60px;background:rgba(255,59,48,.06);border:1px solid rgba(255,59,48,.2);border-radius:20px;max-width:480px">
+      <div style="font-family:'Playfair Display',serif;font-size:4.5rem;color:rgba(255,59,48,.25);line-height:1;margin-bottom:24px">终局</div>
+      <div style="font-size:.88rem;color:var(--gray);line-height:2.2;">
+        <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,59,48,.15)"><strong style="color:rgba(226,226,238,.9);display:block;margin-bottom:4px">2013年9月</strong>微软以 <strong style="color:var(--red)">72亿美元</strong> 收购诺基亚设备与服务部门</div>
+        <div><strong style="color:rgba(226,226,238,.9);display:block;margin-bottom:4px">2016年3月7日</strong>赫尔辛基老厂房前的霓虹灯牌终于熄灭<br>那里曾<strong style="color:var(--red)">年产1.5亿台手机</strong><br>如今只剩风穿过锈蚀的桁架</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14: 数据可视化（上） ==================== -->
+<div class="slide" id="s14" style="padding:40px 60px;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,90,255,.07) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="sec-head" style="margin-bottom:20px;">
+    <span class="sec-label">数据可视化</span>
+    <h2 class="sec-title">帝国的数字轨迹</h2>
+    <p class="sec-desc">2007–2013年，从市场份额、市值、营收到出货量，四个维度还原诺基亚的崩塌全过程</p>
+  </div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-label">市场份额</div><div class="chart-title">智能手机市场占有率</div><div class="chart-sub">100% 堆叠柱状图（%）</div></div>
+      <div class="chart-body"><div class="chart-canvas-wrap"><canvas id="chartMarketShare"></canvas></div><div id="legendMarketShare" class="chart-legend"></div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-label">市值对比</div><div class="chart-title">市值变化趋势</div><div class="chart-sub">折线图（十亿美元）</div></div>
+      <div class="chart-body"><div class="chart-canvas-wrap"><canvas id="chartMarketCap"></canvas></div><div id="legendMarketCap" class="chart-legend"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 15: 数据可视化（下） ==================== -->
+<div class="slide" id="s15" style="padding:40px 60px;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,90,255,.07) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="sec-head" style="margin-bottom:20px;">
+    <span class="sec-label">数据可视化</span>
+    <h2 class="sec-title">帝国的数字轨迹</h2>
+    <p class="sec-desc">2007–2013年，从市场份额、市值、营收到出货量，四个维度还原诺基亚的崩塌全过程</p>
+  </div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-label">手机营收</div><div class="chart-title">手机业务营业收入</div><div class="chart-sub">柱形图（十亿美元，约估）</div></div>
+      <div class="chart-body"><div class="chart-canvas-wrap"><canvas id="chartSalesRevenue"></canvas></div><div id="legendSalesRevenue" class="chart-legend"></div></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-card-header"><div class="chart-label">出货量</div><div class="chart-title">智能手机出货量</div><div class="chart-sub">柱形图（百万台）</div></div>
+      <div class="chart-body"><div class="chart-canvas-wrap"><canvas id="chartSalesVolume"></canvas></div><div id="legendSalesVolume" class="chart-legend"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 16: 时间轴（上） ==================== -->
+<div class="slide bg-mid" id="s16" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:20px;">
+    <span class="sec-label">时间轴</span>
+    <h2 class="sec-title">帝国兴亡之路</h2>
+  </div>
+  <div class="tl-compact" style="flex:1;min-height:0;">
+    <div class="tl-row"><div class="tl-yr">1865</div><div><span class="tl-tag tag-r">诞生</span><span class="tl-ev">诺基亚成立于芬兰坦佩雷</span><div class="tl-d">起初是一家木材纸浆厂，随后扩张至橡胶、电缆、消费电子等多个领域。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">1987</div><div><span class="tl-tag tag-r">进入</span><span class="tl-ev">中国1G移动通信商用，摩托罗拉称霸</span><div class="tl-d">诺基亚此时仍是多元化工业集团，手机业务差点卖给爱立信。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">1992</div><div><span class="tl-tag tag-r">崛起</span><span class="tl-ev">奥利拉出任CEO · Nokia 1011问世</span><div class="tl-d">首款量产GSM手机发布，引发市场抢购。存储99个号码，通话90分钟，重量不足500克。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">1994</div><div><span class="tl-tag tag-r">壮士断腕</span><span class="tl-ev">出售所有传统业务 · Nokia 2110拨通中国首个GSM通话</span><div class="tl-d">奥利拉说服董事会放弃129年的保命之本，全力押注通信行业。销售额增长38%。</div></div></div>
+    <div class="tl-row"><div class="tl-yr">1998</div><div><span class="tl-tag tag-r">登顶</span><span class="tl-ev">超越摩托罗拉 · 登顶全球第一</span><div class="tl-d">市占率23%，出货量1.63亿部。从"差点卖身"到世界霸主，仅用6年。</div></div></div>
+    <div class="tl-row"><div class="tl-yr gold">2002</div><div><span class="tl-tag tag-p">巅峰</span><span class="tl-ev">Nokia 7650 · 首款塞班智能机</span><div class="tl-d">30万像素彩色摄像头，彩色屏幕，开启智能手机主导地位。"诺基亚+塞班+德州仪器"所向披靡。</div></div></div>
+    <div class="tl-row"><div class="tl-yr gold">2005</div><div><span class="tl-tag tag-p">全盛</span><span class="tl-ev">出货量2.64亿部 · 全球市占率超40%</span><div class="tl-d">是摩托罗拉的1.8倍。同年谷歌收购安卓（5000万美元），乔布斯正在学习造手机——风暴酝酿。</div></div></div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 17: 时间轴（下） ==================== -->
+<div class="slide bg-mid" id="s17" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:20px;">
+    <span class="sec-label">时间轴</span>
+    <h2 class="sec-title">帝国兴亡之路</h2>
+  </div>
+  <div class="tl-compact" style="flex:1;min-height:0;">
+    <div class="tl-row"><div class="tl-yr red">2007</div><div><span class="tl-tag tag-f">警示</span><span class="tl-ev">iPhone发布 · 诺基亚CEO不以为然</span><div class="tl-d">次年诺基亚销售额比预期低29%，iPhone智能手机市占率达到8.2%，苹果市值超越诺基亚。</div></div></div>
+    <div class="tl-row"><div class="tl-yr red">2008</div><div><span class="tl-tag tag-f">反击</span><span class="tl-ev">HTC Dream · 全球首款安卓手机发布</span><div class="tl-d">开放手机联盟（Open Handset Alliance）成立（三星、LG、索尼、HTC、摩托罗拉），三星、索尼迅速跟进发布安卓手机。</div></div></div>
+    <div class="tl-row"><div class="tl-yr red">2010</div><div><span class="tl-tag tag-f">跌落</span><span class="tl-ev">安卓市占率正式超越塞班 · 埃洛普上任</span><div class="tl-d">埃洛普发出"燃烧平台"备忘录，随即放弃 MeeGo，押注Windows Phone。Nokia N9口碑良好却被战略性抛弃。</div></div></div>
+    <div class="tl-row"><div class="tl-yr red">2011</div><div><span class="tl-tag tag-f">押注</span><span class="tl-ev">Nokia Lumia 800发布</span><div class="tl-d">全球首款Windows Phone手机上市，反响平平。WP7无法升级WP8，背刺老用户。</div></div></div>
+    <div class="tl-row"><div class="tl-yr gray">2013</div><div><span class="tl-tag tag-e">终局</span><span class="tl-ev">微软72亿美元收购诺基亚设备部门</span><div class="tl-d">"我们没做错什么，但不知怎么的，我们输了。"</div></div></div>
+    <div class="tl-row"><div class="tl-yr gray">2016</div><div><span class="tl-tag tag-e">熄灭</span><span class="tl-ev">赫尔辛基老厂房霓虹灯牌熄灭</span><div class="tl-d">那里曾年产1.5亿台手机，如今只剩风穿过锈蚀的桁架。诺基亚品牌悄然淡出手机前台。</div></div></div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 18: "我们没做错什么" · 败因精要 ==================== -->
+<div class="slide" id="s18" style="text-align:center;background:linear-gradient(135deg,rgba(255,59,48,.10) 0%,var(--mid) 100%);">
+  <div style="position:relative;z-index:1;">
+    <span class="sec-label" style="color:var(--red)">诺基亚CEO斯蒂芬·埃洛普 · 2013年收购发布会</span>
+    <p class="crisis-q">"我们没做错什么，<br>但不知怎么的，我们输了。"</p>
+    <div class="crisis-src" style="margin-bottom:30px;">— He didn't cry, but everyone else did.</div>
+
+    <div style="max-width:900px;margin:0 auto;text-align:left;">
+      <div style="font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;">败因精要</div>
+      <p style="font-size:.95rem;color:rgba(226,226,238,.75);line-height:2;font-family:'Noto Serif SC',serif;">
+        低估了智能手机从<strong style="color:rgba(226,226,238,.95);">"硬件竞赛"</strong>转向<strong style="color:rgba(226,226,238,.95);">"软件生态+用户体验革命"</strong>的范式转变，过度依赖Symbian、反应迟缓、内部派系斗争。
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 19: 殊途同归 · 摩托罗拉 & 柯达 ==================== -->
+<div class="slide" id="s19" style="background:linear-gradient(135deg,rgba(255,59,48,.10) 0%,var(--mid) 100%);">
+  <div style="position:relative;z-index:1;max-width:1000px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:36px;">
+      <div style="font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:10px;">殊途同归</div>
+      <p style="font-family:'Noto Serif SC',serif;font-size:clamp(1rem,2vw,1.2rem);color:rgba(226,226,238,.8);line-height:1.8;">
+        非常类似命运的，还有另外两个曾经的行业霸主：<strong style="color:#fff;">摩托罗拉</strong>（Motorola）和<strong style="color:#fff;">柯达</strong>（Kodak）。<br>
+        它们几乎可以用同一句感慨来总结：<em style="color:var(--red);">"（在旧规则里）我们没做错什么，但不知怎么的，我们输了。"</em>
+      </p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div class="crisis-card moto">
+        <div style="font-family:'Playfair Display',serif;font-size:5rem;font-weight:700;color:rgba(255,59,48,.06);position:absolute;top:8px;right:16px;line-height:1;pointer-events:none;">M</div>
+        <div style="font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:14px;">摩托罗拉 · Motorola</div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#fff;margin-bottom:16px;font-weight:600;">发明者的困境</h3>
+        <p style="font-size:.87rem;color:var(--gray);line-height:1.9;">
+          摩托罗拉曾发明世界上第一款移动电话，凭借Razr系列风靡全球，成为1G时代功能手机时代的王者。它在硬件创新上极具天赋，却在2G时代，<strong style="color:rgba(242, 6, 6, 0.85);">不愿意放弃1G原本的技术优势</strong>，最终被诺基亚反超。
+        </p>
+      </div>
+      <div class="crisis-card kodak">
+        <div style="font-family:'Playfair Display',serif;font-size:5rem;font-weight:700;color:rgba(255,214,10,.06);position:absolute;top:8px;right:16px;line-height:1;pointer-events:none;">K</div>
+        <div style="font-size:.62rem;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">柯达 · Kodak</div>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:1.1rem;color:#fff;margin-bottom:16px;font-weight:600;">发明者的讽刺</h3>
+        <p style="font-size:.87rem;color:var(--gray);line-height:1.9;">
+          柯达发明了数码相机，却因死守胶片业务的巨额利润，迟迟不愿全力拥抱自己开创的数字影像时代。数码摄影颠覆了胶片耗材的商业模式，柯达虽有技术储备，却在<strong style="color:rgba(226,226,238,.85);">"保护核心业务"</strong>的惯性中犹豫，最终被新兴玩家甩在身后，走向破产重组。<strong style="color:var(--gold);">胶片帝国的辉煌，成了最沉重的枷锁。</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 20: 逝水英雄 · 最残酷的教训 ==================== -->
+<div class="slide" id="s20" style="text-align:center;background:linear-gradient(135deg,rgba(255,59,48,.08) 0%,var(--mid) 100%);">
+  <div style="position:relative;z-index:1;max-width:900px;margin:0 auto;">
+    <div style="padding:40px;margin-bottom:36px;background:rgba(255,214,10,.04);border:1px solid rgba(255,214,10,.15);border-radius:16px;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:clamp(1rem,2.2vw,1.35rem);color:rgba(226,226,238,.85);line-height:2.2;letter-spacing:3px;">
+        诺基亚河西逝水，浪花淘尽英雄。<br>
+        是非成败转头空。<br>
+        列维山依旧在，几度夕阳红。
+      </p>
+    </div>
+
+    <div style="padding:36px 40px;background:rgba(0,90,255,.06);border:1px solid rgba(0,90,255,.18);border-radius:14px;">
+      <p style="font-family:'Noto Serif SC',serif;font-size:clamp(.95rem,2vw,1.15rem);color:rgba(226,226,238,.8);line-height:2;font-style:italic;">
+        旧规则里的优等生，往往最难相信新规则已然降临。<br>
+        <strong style="color:#fff;font-style:normal;">这或许才是最残酷的教训。</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 21: 对比之下 ==================== -->
+<div class="slide bg-mid" id="s21">
+  <div class="sec-head">
+    <span class="sec-label">对比之下</span>
+    <h2 class="sec-title">谁接过了王冠？</h2>
+  </div>
+  <div class="cmp-grid">
+    <div class="cmp-card apple">
+      <div class="cmp-brand">Apple</div>
+      <div class="cmp-sub">颠覆式创新者</div>
+    </div>
+    <div class="cmp-card samsung">
+      <div class="cmp-brand">Samsung</div>
+      <div class="cmp-sub">快速跟随者 · 全产业链玩家</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 22: 四次错过的翻盘机会 ==================== -->
+<div class="slide" id="s22" style="padding:40px 60px;">
+  <div class="sec-head">
+    <span class="sec-label">关键节点</span>
+    <h2 class="sec-title">四次错过的翻盘机会</h2>
+    <p class="sec-desc">2005至2012年间，诺基亚至少有四次关键的转型机会，但都遗憾错过</p>
+  </div>
+  <div class="chance-grid">
+    <div class="chance-card"><span class="chance-yr">2005</span><div class="chance-title">内部触屏方案被否决</div></div>
+    <div class="chance-card"><span class="chance-yr">2008</span><div class="chance-title">错过加入安卓生态的机会</div></div>
+    <div class="chance-card"><span class="chance-yr">2010</span><div class="chance-title">放弃 MeeGo，押注 Windows Phone</div></div>
+    <div class="chance-card"><span class="chance-yr">2011</span><div class="chance-title">拒绝转向安卓的最后机会</div></div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 23: 失败的四重根因（上） ==================== -->
+<div class="slide bg-mid" id="s23" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:20px;">
+    <span class="sec-label">深度解析</span>
+    <h2 class="sec-title">失败的四重根因</h2>
+    <p class="sec-desc">诺基亚的衰落并非单一失误，而是领导力缺陷、认知偏见和组织惰性在技术革命背景下的集中爆发</p>
+  </div>
+  <div class="fail-grid">
+    <div class="fail-card">
+      <div class="fail-n">01</div><div class="fail-icon">⚓</div>
+      <h3 class="fail-title">沉没成本谬误与战略惰性</h3>
+      <div class="fail-body">
+        <p>2008-2010年间，诺基亚投入<strong>数十亿美元改进塞班</strong>而非全面转向新系统。试图用Qt框架统一塞班和 MeeGo 的开发，结果两者都未成功。</p>
+        <p><strong>双重困境</strong></p>
+        <p><strong>沉没成本偏见（Sunk Cost Bias）</strong></p>
+        <p><strong>决策理论</strong>：如Kahneman的<strong>前景理论（Prospect Theory）</strong></p>
+        <p>启示：沉没成本不参与重大决策。</p>
+      </div>
+    </div>
+    <div class="fail-card">
+      <div class="fail-n">02</div><div class="fail-icon">🔮</div>
+      <h3 class="fail-title">心理学投射效应与过度自信</h3>
+      <div class="fail-body">
+        <p>作为长期市场引领者，诺基亚高层陷入"<strong>心理学投射效应</strong>"，将自己的偏好投射到消费者身上——认为"<strong>没有键盘的手机不可能成功</strong>"，过度依赖品牌资产来抵消产品劣势。</p>
+        <p><strong>心理学投射效应（Projection Bias）</strong></p>
+        <p><strong>过度自信偏见（Overconfidence Bias）</strong></p>
+        <p>启示：领导者需主动收集多元反馈，应建立开放的质疑机制。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 24: 失败的四重根因（下） ==================== -->
+<div class="slide bg-mid" id="s24" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:20px;">
+    <span class="sec-label">深度解析</span>
+    <h2 class="sec-title">失败的四重根因</h2>
+    <p class="sec-desc">诺基亚的衰落并非单一失误，而是领导力缺陷、认知偏见和组织惰性在技术革命背景下的集中爆发</p>
+  </div>
+  <div class="fail-grid">
+    <div class="fail-card">
+      <div class="fail-n">03</div><div class="fail-icon">🔬</div>
+      <h3 class="fail-title">技术自恋与核心能力陷阱</h3>
+      <div class="fail-body">
+        <p>诺基亚陷入致命的"<strong>技术自恋</strong>"，过度沉迷于自己擅长的硬件制造和通信技术（如信号、耐用性），忽视了<strong>软件体验和生态系统</strong>在智能手机时代的战略价值。</p>
+        <p><strong>技术自恋（Technological Narcissism）</strong></p>
+        <p><strong>确认偏见（Confirmation Bias）</strong></p>
+        <p><strong>核心竞争力陷阱（Core Competence Trap）</strong></p>
+        <p>启示：<strong>SWOT分析框架</strong> + <strong>仆人式领导（Servant Leadership）</strong></p>
+      </div>
+    </div>
+    <div class="fail-card">
+      <div class="fail-n">04</div><div class="fail-icon">🤫</div>
+      <h3 class="fail-title">群体迷思与组织沉默</h3>
+      <div class="fail-body">
+        <p>在危机高压下，高管团队追求表面共识（<strong>"群体迷思"</strong>），批判性思维退化。对埃洛普的Windows Phone战略<strong>几乎没有受到有效挑战</strong>。</p>
+        <p><strong>群体迷思偏见（Groupthink Bias）</strong></p>
+        <p><strong>组织沉默（Organizational Silence）</strong></p>
+        <p><strong>恐慌文化（Panic Culture）</strong></p>
+        <p><strong>非我发明症（Not Invented Here）</strong></p>
+        <p><strong>心理安全（Psychological Safety）</strong></p>
+        <p>启示：红队演练（Red Teaming）</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 25: 历史假设 ==================== -->
+<div class="slide" id="s25">
+  <div class="sec-head">
+    <span class="sec-label">历史假设</span>
+    <h2 class="sec-title">如果诺基亚选择了不同的路</h2>
+    <p class="sec-desc">从技术角度看，诺基亚有多个翻盘机会——但即使选择了正确的技术路线，仍面临深层挑战</p>
+  </div>
+  <div class="counter-grid">
+    <div class="counter-card">
+      <span class="counter-if">如果 · 2008年</span>
+      <div class="counter-title">接受谷歌橄榄枝，加入安卓阵营</div>
+      <div class="counter-body">诺基亚很可能成为<strong>"安卓阵营的三星"</strong>，甚至主导安卓生态。</div>
+    </div>
+    <div class="counter-card">
+      <span class="counter-if">如果 · 2010年</span>
+      <div class="counter-title">坚持全力投入 MeeGo </div>
+      <div class="counter-body">可能形成<strong>iOS、安卓、MeeGo 三足鼎立</strong>的局面。</div>
+    </div>
+    <div class="counter-card">
+      <span class="counter-if">然而</span>
+      <div class="counter-title">技术路线之外的深层问题</div>
+      <div class="counter-body"><strong>组织文化、决策机制和领导力模式</strong>已不适应智能手机时代。<br>诺基亚的真正问题不是选错了操作系统，而是<strong>内部已形成阻碍创新的系统性问题</strong>。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 26: 复盘推演 · 标题 ==================== -->
+<div class="slide" id="s26" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:16px;">
+    <span class="sec-label">复盘推演</span>
+    <h2 class="sec-title">如果重来，诺基亚应该怎么做？</h2>
+    <p class="sec-desc">回顾四次错过的翻盘机会，逐一拆解基于关键节点的局部最优决策路径与风险评估</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 27: 复盘推演 · 2005 内部触屏 ==================== -->
+<div class="slide" id="s27" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:16px;">
+    <span class="sec-label">复盘推演</span>
+    <h2 class="sec-title">如果重来，诺基亚应该怎么做？</h2>
+    <p class="sec-desc">回顾四次错过的翻盘机会，逐一拆解基于关键节点的局部最优决策路径与风险评估</p>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:20px;">
+    <div class="fail-card" style="background:var(--card);border-radius:16px;padding:36px 40px;">
+      <div class="fail-n">2005</div><div class="fail-icon">📱</div>
+      <h3 class="fail-title">内部触屏项目遭否决：应建立创新孵化器</h3>
+      <div class="fail-body">
+        <p>领导层应当采用<strong>「创新孵化器」模式</strong>：成立独立的小型专项团队（5–10人），分配专用研发预算（约占整体 R&D 的 5%），在6个月内完成触屏原型开发，并通过 A/B 测试收集用户反馈。</p>
+        <div class="hl-box" style="margin:14px 0;">
+          <span class="hl-label">⚡ 风险评估</span>
+          <p>短期成本约增加 <strong>10%</strong>，但若原型验证成功，可在 iPhone 正式发布前率先抢占触屏市场份额达 <strong>20%</strong>。</p>
+        </div>
+        <div class="detail-list">
+          <div class="detail-item"><div class="di-dot"></div><p><strong>第一步</strong>：评估外部市场趋势报告（如 Gartner 预测），确认触屏方向的战略必要性</p></div>
+          <div class="detail-item"><div class="di-dot"></div><p><strong>第二步</strong>：组建跨部门创新团队，融合硬件、软件与用户体验设计人才</p></div>
+          <div class="detail-item"><div class="di-dot"></div><p><strong>第三步</strong>：设定明确的阶段性 KPI，例如用户满意度达到 80% 以上</p></div>
+          <div class="detail-item"><div class="di-dot"></div><p><strong>第四步</strong>：若阶段目标未达成，快速迭代或果断转向，避免在错误方向上持续投入</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 28: 复盘推演 · 2008 安卓生态 ==================== -->
+<div class="slide" id="s28" style="padding:40px 60px;">
+  <div class="sec-head" style="margin-bottom:16px;">
+    <span class="sec-label">复盘推演</span>
+    <h2 class="sec-title">如果重来，诺基亚应该怎么做？</h2>
+    <p class="sec-desc">回顾四次错过的翻盘机会，逐一拆解基于关键节点的局部最优决策路径与风险评估</p>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:20px;">
+    <div class="fail-card" style="background:var(--card);border-radius:16px;padding:36px 40px;">
+      <div class="fail-n">2008</div><div class="fail-icon">🤖</div>
+      <h3 class="fail-title">错过安卓生态：应采取双轨并行策略</h3>
+      <div class="fail-body">
+        <p>建议立即加入安卓开放手机联盟，同时执行<strong>"双轨制"策略</strong>：一方面维护塞班在存量用户中的市场地位，另一方面同步启动安卓产品线研发，以覆盖增量市场（尤其是亚洲新兴市场）。</p>
+        <div class="hl-box red" style="margin:14px 0;">
+          <span class="hl-label">⚡ 风险评估</span>
+          <p>塞班存量用户流失风险较高，潜在短期市场损失约 <strong>15%</strong>；但安卓路线可覆盖高增长新兴市场，预期1年内拉动销量提升 <strong>30%</strong>。</p>
+        </div>
+        <div class="detail-list">
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第一步</strong>：与谷歌积极谈判开源协议，明确合作条款与品牌独立边界</p></div>
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第二步</strong>：追加约 <strong>1 亿美元</strong>专项投入，开发诺基亚特色安卓定制 UI，构建差异化优势</p></div>
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第三步</strong>：分阶段推进市场落地——优先在中低端机型验证，积累数据与口碑</p></div>
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第四步</strong>：持续监控生态兼容性，提前规避潜在专利纠纷风险</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 29: 复盘推演 · 2010 MeeGo ==================== -->
+<div class="slide bg-mid" id="s29" style="padding:40px 60px;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,90,255,.07) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="sec-head" style="margin-bottom:16px;">
+    <span class="sec-label">复盘推演</span>
+    <h2 class="sec-title">如果重来，诺基亚应该怎么做？</h2>
+    <p class="sec-desc">回顾四次错过的翻盘机会，逐一拆解基于关键节点的局部最优决策路径与风险评估</p>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:20px;">
+    <div class="fail-card" style="background:var(--card);border-radius:16px;padding:36px 40px;">
+      <div class="fail-n">2010</div><div class="fail-icon">🚀</div>
+      <h3 class="fail-title">放弃 MeeGo：应坚守高端旗舰，扩展开发者生态</h3>
+      <div class="fail-body">
+        <p>应坚持以 MeeGo 作为高端旗舰系统的核心路线，同时深化与英特尔的技术合作，积极构建开发者生态。N9 已经证明 MeeGo 具备强劲竞争力，关键在于给它足够的资源与时间。</p>
+        <div class="hl-box gold" style="margin:14px 0;">
+          <span class="hl-label">⚡ 风险评估</span>
+          <p>完整开发周期预计约需 <strong>2 年</strong>，短期内存在市场空窗期风险；但若成功落地，可实现差异化竞争，彻底摆脱对 Windows Phone 的战略依赖。</p>
+        </div>
+        <div class="detail-list">
+          <div class="detail-item"><div class="di-dot gold"></div><p><strong>第一步</strong>：注入额外 <strong>2 亿美元</strong>专项资金，用于吸引第三方开发者加入 MeeGo 生态</p></div>
+          <div class="detail-item"><div class="di-dot gold"></div><p><strong>第二步</strong>：推出开发者激励计划，设立奖金池与创新大赛，快速扩充应用生态</p></div>
+          <div class="detail-item"><div class="di-dot gold"></div><p><strong>第三步</strong>：与三星、HTC等硬件厂商分享 MeeGo 核心技术，形成开放 MeeGo 联盟共同对抗 iOS 与安卓</p></div>
+          <div class="detail-item"><div class="di-dot gold"></div><p><strong>预期影响</strong>：高端市场份额有望恢复约 <strong>10%</strong>，并为未来 AI 功能集成奠定坚实的系统基础</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 30: 复盘推演 · 2011 多平台 ==================== -->
+<div class="slide bg-mid" id="s30" style="padding:40px 60px;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(0,90,255,.07) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="sec-head" style="margin-bottom:16px;">
+    <span class="sec-label">复盘推演</span>
+    <h2 class="sec-title">如果重来，诺基亚应该怎么做？</h2>
+    <p class="sec-desc">回顾四次错过的翻盘机会，逐一拆解基于关键节点的局部最优决策路径与风险评估</p>
+  </div>
+  <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:20px;">
+    <div class="fail-card" style="background:var(--card);border-radius:16px;padding:36px 40px;">
+      <div class="fail-n">2011</div><div class="fail-icon">🔀</div>
+      <h3 class="fail-title">拒绝转向安卓：应转为多平台并行策略</h3>
+      <div class="fail-body">
+        <p>应果断调整为<strong>「多平台策略」</strong>：以 Windows Phone 为主要合作方向，同时引入安卓作为辅线，以更广泛的平台覆盖对冲单一生态风险。</p>
+        <div class="hl-box red" style="margin:14px 0;">
+          <span class="hl-label">⚡ 风险评估</span>
+          <p>多平台策略存在品牌定位分裂的隐患，但可有效覆盖更广泛的用户群体，为诺基亚争取更多的战略腾挪空间。</p>
+        </div>
+        <div class="detail-list">
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第一步</strong>：开展大规模市场调研，客观评估用户对 Windows Phone 与安卓的实际偏好</p></div>
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第二步</strong>：快速推出安卓版 Lumia 系列，复用现有硬件设计优势降低开发成本</p></div>
+          <div class="detail-item"><div class="di-dot red"></div><p><strong>第三步</strong>：基于销售数据与用户反馈动态调整两个平台的资源投入比例，逐步将安卓比重提升至 <strong>40%</strong></p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 31: 四条路径四种命运 · 标题 ==================== -->
+<div class="slide" id="s31" style="padding:36px 60px;">
+  <div class="sec-head" style="margin-bottom:14px;">
+    <span class="sec-label">多维复盘 · 概率推演</span>
+    <h2 class="sec-title">如果重来——四条路径，四种命运</h2>
+    <p class="sec-desc">引入蒙特卡洛模拟 · 从全局最优解到历史真实走向，逐一拆解每条路径的胜负逻辑与命运推演</p>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 32: 最优解 ==================== -->
+<div class="slide" id="s32" style="padding:36px 60px;">
+  <div class="sec-head" style="margin-bottom:14px;">
+    <span class="sec-label">多维复盘 · 概率推演</span>
+    <h2 class="sec-title">如果重来——四条路径，四种命运</h2>
+    <p class="sec-desc">引入蒙特卡洛模拟 · 从全局最优解到历史真实走向，逐一拆解每条路径的胜负逻辑与命运推演</p>
+  </div>
+  <div class="rank-cards">
+    <div class="rank-card rank-1">
+      <div class="rank-badge gold">①</div>
+      <span class="rank-label gold">最优解 · 概率最高能保住前三，甚至挑战三星</span>
+      <h3 class="rank-title">2008–2009 年果断 All in Android + 保留 Here 地图差异化</h3>
+      <div class="rank-body">
+        <p>2008年Android刚开源，诺基亚体量巨大，完全可以成为Android阵营的"三星之前的三星"。</p>
+        <div class="rank-sub-list">
+          <div class="rank-sub-item"><div class="rank-dot gold"></div><span>凭借自家硬件工业设计、供应链、渠道、品牌及拍照/耐用口碑，早期就能压制HTC、三星等后来者。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot gold"></div><span>保留Here地图作为杀手级差异化产品（类似三星后来保留自主研发产品），而不是被Google Maps完全压制。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot gold"></div><span>结果推演：很可能保住全球30–40%份额，活成今天类似"三星+华为"的混合体，而不是被肢解卖身。模拟结果与很多业内复盘结果保持一致，都认为这是唯一真正可能逆转命运的窗口。</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 33: 次优选择 ==================== -->
+<div class="slide" id="s33" style="padding:36px 60px;">
+  <div class="sec-head" style="margin-bottom:14px;">
+    <span class="sec-label">多维复盘 · 概率推演</span>
+    <h2 class="sec-title">如果重来——四条路径，四种命运</h2>
+    <p class="sec-desc">引入蒙特卡洛模拟 · 从全局最优解到历史真实走向，逐一拆解每条路径的胜负逻辑与命运推演</p>
+  </div>
+  <div class="rank-cards">
+    <div class="rank-card rank-2">
+      <div class="rank-badge blue">②</div>
+      <span class="rank-label blue">次优选择 · 仍远好于历史</span>
+      <h3 class="rank-title">全力把 MeeGo 做成第三极（2010–2012 年窗口）</h3>
+      <div class="rank-body">
+        <p>MeeGo（Maemo + Moblin）是当时唯一真正有潜力同时对抗iOS和Android的第三条路。N9（2011年）的系统体验、滑动交互以及工业设计放到二十多年后的今天评价依然非常优秀。</p>
+        <div class="rank-sub-list">
+          <div class="rank-sub-item"><div class="rank-dot blue"></div><span>2010年逐步砍掉Symbian残血项目，把资源、人才、营销全部砸到MeeGo，同时用低端Asha系列继续收割功能机现金流。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot blue"></div><span>有可能形成iOS + Android + MeeGo三足鼎立的格局。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot blue"></div><span>问题：需要极高的执行力和壮士断腕决心（当时内部还在幻想Symbian / Belle能翻盘）。</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 34: 比真实历史稍好 ==================== -->
+<div class="slide" id="s34" style="padding:36px 60px;">
+  <div class="sec-head" style="margin-bottom:14px;">
+    <span class="sec-label">多维复盘 · 概率推演</span>
+    <h2 class="sec-title">如果重来——四条路径，四种命运</h2>
+    <p class="sec-desc">引入蒙特卡洛模拟 · 从全局最优解到历史真实走向，逐一拆解每条路径的胜负逻辑与命运推演</p>
+  </div>
+  <div class="rank-cards">
+    <div class="rank-card rank-3">
+      <div class="rank-badge gray">③</div>
+      <span class="rank-label gray">比真实历史稍好 · 但已晚了</span>
+      <h3 class="rank-title">2010 年底选 Android 而非 WP</h3>
+      <div class="rank-body">
+        <p>2010年底Android已经很强势，三星Galaxy S开始爆发。诺基亚再进场也很难再做老大，但至少能保住中高端很大份额，不至于像WP那样生态直接崩盘。</p>
+        <div class="rank-sub-list">
+          <div class="rank-sub-item"><div class="rank-dot gray"></div><span>真实历史里WP从一开始就几乎没有第三方开发者愿意认真适配，导致Lumia再漂亮也卖不动。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot gray"></div><span>选Android即便是跟随者，也好过与WP一起陷入死循环。</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 35: 真实历史走的路 ==================== -->
+<div class="slide" id="s35" style="padding:36px 60px;">
+  <div class="sec-head" style="margin-bottom:14px;">
+    <span class="sec-label">多维复盘 · 概率推演</span>
+    <h2 class="sec-title">如果重来——四条路径，四种命运</h2>
+    <p class="sec-desc">引入蒙特卡洛模拟 · 从全局最优解到历史真实走向，逐一拆解每条路径的胜负逻辑与命运推演</p>
+  </div>
+  <div class="rank-cards">
+    <div class="rank-card rank-4">
+      <div class="rank-badge red">④</div>
+      <span class="rank-label red">真实历史走的路 · 几乎最差的选项之一</span>
+      <h3 class="rank-title">2011 年 2 月宣布 All in Windows Phone</h3>
+      <div class="rank-body">
+        <p>此时Android已成事实标准，iOS高端稳固，WP几乎从零开始建生态。</p>
+        <div class="rank-sub-list">
+          <div class="rank-sub-item"><div class="rank-dot red"></div><span>开发者不来 → 应用少 → 用户不买 → 开发者更不来，死循环。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot red"></div><span>硬件再强（Lumia 920/1020拍照确实吊打同时代）也救不回来。</span></div>
+          <div class="rank-sub-item"><div class="rank-dot red"></div><span>最终结果：2013年以远低于预期的价格卖给微软，手机业务基本归零。</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 36: 关键节点对比 ==================== -->
+<div class="slide bg-mid" id="s36" style="padding:36px 60px;">
+  <div style="text-align:center;margin-bottom:16px;">
+    <span class="sec-label">关键节点对比</span>
+  </div>
+  <div class="decision-table-wrap">
+    <table class="decision-table">
+      <thead><tr><th>时间点</th><th>历史真实路径</th><th>最优复盘路径</th><th>推演结果</th></tr></thead>
+      <tbody id="decision-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 37: 警示 ==================== -->
+<div class="slide" id="s37" style="text-align:center;background:radial-gradient(ellipse 65% 65% at 50% 50%, rgba(0,90,255,.1), transparent),var(--dark);">
+  <div style="position:relative;z-index:1;">
+    <div class="sec-head" style="padding-top:0;">
+      <span class="sec-label">以史为鉴，可以知兴替</span>
+      <h2 class="sec-title">诺基亚留给我们的</h2>
+    </div>
+    <div class="pills">
+      <div class="pill">没有永恒的竞争优势</div>
+      <div class="pill">过去的成功可能是未来失败的根源</div>
+      <div class="pill">领导者必须塑造未来而非执着于管理当下</div>
+      <div class="pill">最危险的决策在于偏见过滤了信息</div>
+      <div class="pill">组织文化是转型的最大阻力</div>
+      <div class="pill">心理安全让不和谐的声音被听见</div>
+      <div class="pill">软件生态的价值有时会超越硬件本身</div>
+      <div class="pill">感知—响应—学习的适应性系统</div>
+      <div class="pill">建立识别并纠正领导力缺陷的元能力</div>
+      <div class="pill">在变化超过学习速度的时代保持谦逊</div>
+    </div>
+    <p class="final-quote">
+      诺基亚的溃败并非始于2011年转向Windows Phone，而是早在2004年取消内部软件创新激励机制、2007年弱化Symbian开源协作、2009年裁撤用户体验研究团队时，便已埋下系统性失能的伏笔。其衰落本质是工业时代组织范式在数字生态时代的全面失效——当世界加速奔向"软件定义体验"，诺基亚仍执着于"硬件定义质量"。今天回望，真正的教训不是"该选哪个系统"，而是：没有适配新生产力的组织，再强的技术储备也终将锈蚀。
+    </p>
+    <div class="yijing">《周易》：穷则变，变则通，通则久</div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 38: 思考与提问 ==================== -->
+<div class="slide bg-mid" id="s38">
+  <div class="sec-head">
+    <span class="sec-label">思维发散</span>
+    <h2 class="sec-title">思考与提问</h2>
+  </div>
+  <div class="qa-grid">
+    <div class="qa-card" onclick="this.classList.toggle('open')">
+      <span class="qa-n">Q 01</span>
+      <p class="qa-q">为什么Apple能够引领智能手机市场？</p>
+      <div class="qa-a">苹果精准抓住了诺基亚时代的"痛点"。诺基亚时代手机的核心是"通信工具"，追求耐用、信号好、续航长，而苹果看到了用户对"<strong>移动互联网终端</strong>"的潜在需求，用多点触控电容屏和iOS的流畅体验，彻底淘汰物理键盘和复杂的塞班系统，重新定义手机是"装在口袋里的电脑"。<br><br>同时通过"<strong>iPhone+iOS+App Store</strong>"的封闭生态垂直整合，构建了极高的护城河，保证了极致的用户体验和安全性，这是诺基亚的开放联盟模式无法比拟的。</div>
+      <span class="qa-hint">点击展开答案 ↓</span>
+    </div>
+    <div class="qa-card" onclick="this.classList.toggle('open')">
+      <span class="qa-n">Q 02</span>
+      <p class="qa-q">为什么三星能成功站稳脚跟？</p>
+      <div class="qa-a">三星与诺基亚的相似只是表象，两者的战略内核完全不同。诺基亚是"被颠覆者"，三星是"<strong>快速跟随者</strong>"和"<strong>全产业链玩家</strong>"。<br><br>三星最聪明之处在于双轨制战略：一方面自研系统（Bada/Tizen）保留技术火种，防止被卡脖子；另一方面当安卓成熟时，果断放弃幻想，全力押注安卓，成为安卓阵营"带头大哥"。相比之下，诺基亚在塞班失败后错误选择了小众的Windows Phone。此外，三星拥有<strong>从芯片、屏幕、内存到电池的全产业链优势</strong>，并通过机海战术迅速抢占了诺基亚留下的市场真空。</div>
+      <span class="qa-hint">点击展开答案 ↓</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 39: 参考文献 ==================== -->
+<div class="slide" id="s39" style="padding:50px 80px;border-top:1px solid rgba(0,90,255,.1);">
+  <div class="sec-head" style="padding-bottom:20px;">
+    <span class="sec-label">学术来源</span>
+    <h2 class="sec-title">参考文献</h2>
+    <p class="sec-desc">本次展示基于以下学术著作、商业分析报告与同行评审期刊论文</p>
+  </div>
+  <div class="refs-grid">
+    <div class="ref-item"><div class="ref-num">01</div><div class="ref-content"><div class="ref-author">刘祥亚（2008）</div><div class="ref-title">《NOKIA：来自北欧的冰蓝传奇》</div><div class="ref-source">专著 · 诺基亚品牌与企业史研究</div></div></div>
+    <div class="ref-item"><div class="ref-num">02</div><div class="ref-content"><div class="ref-author">孙秀蕙（2011）</div><div class="ref-title">《手机巨人诺基亚为何倒下？100分的输家》</div><div class="ref-source">《商业周刊》，第1233期，108–134页</div></div></div>
+    <div class="ref-item"><div class="ref-num">03</div><div class="ref-content"><div class="ref-author">财团法人国家实验研究院科技政策研究与资讯中心</div><div class="ref-title">科技产验资讯室相关数据报告</div><div class="ref-source">政策研究报告 · 移动通信市场统计数据</div></div></div>
+    <div class="ref-item"><div class="ref-num">04</div><div class="ref-content"><div class="ref-author">Vuori, T. O., &amp; Huy, Q. N. (2016)</div><div class="ref-title">Distributed attention and shared emotions in the innovation process: How Nokia lost the smartphone battle</div><div class="ref-source"><em>Administrative Science Quarterly</em>, 61(1), 9–51 · DOI: 10.1177/0001839215606951</div></div></div>
+    <div class="ref-item"><div class="ref-num">05</div><div class="ref-content"><div class="ref-author">Agrawal, A., Cockburn, I., &amp; Rosell, C. (2010)</div><div class="ref-title">Not invented here? Innovation in company towns</div><div class="ref-source"><em>Journal of Urban Economics</em>, 67(1), 78–89 · 组织惰性与"非我发明症"研究</div></div></div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 40: 感谢聆听 ==================== -->
+<div class="slide" id="s40" style="text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,90,255,.08) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 10% 100%, rgba(0,212,255,.05) 0%, transparent 60%),var(--dark);border-top:1px solid rgba(0,90,255,.15);">
+  <div style="position:relative;z-index:1;">
+    <span class="sec-label">MERCI · 谢谢</span>
+    <h2 class="ty-title">感谢聆听</h2>
+    <p class="ty-sub">Group 5 全体敬上</p>
+    <table class="ty-table" style="max-width:700px;margin:30px auto 0;">
+      <thead><tr><th>成员</th><th>学号</th><th>贡献</th></tr></thead>
+      <tbody id="team-tbody"></tbody>
+    </table>
+    <div class="ppt-footer" style="max-width:700px;margin:30px auto 0;">
+      <div style="text-align:left;">
+        <div class="pft-brand">NOKIA</div>
+        <div style="font-size:.68rem;color:var(--gray);">©️Copywrite 2026 Edward ZHAO</div>
+        <div style="font-size:.58rem;color:rgba(142,142,160,.55);letter-spacing:1.5px;text-transform:uppercase;">MM5203 Decision Making For Leadership</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="pft-group">Group 5</div>
+        <div style="font-size:.65rem;color:var(--gray);">诺基亚兴亡录 · 领导力决策</div>
+        <div style="font-size:.55rem;color:rgba(142,142,160,.35);letter-spacing:1px;">从北欧传奇到"燃烧平台"的警示</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /slide-deck -->
+
+<!-- External JS for chart data -->
+<script src="./JavaScript/market_share.js"></script>
+<script src="./JavaScript/market_cap.js"></script>
+<script src="./JavaScript/sales_revenue.js"></script>
+<script src="./JavaScript/sales_volume.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="./JavaScript/team.js"></script>
+<script src="./JavaScript/decision_table.js"></script>
+
+<script>
+// ==================== PPT NAVIGATION ====================
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const total = slides.length;
+
+function showSlide(n) {
+  slides[current].classList.remove('active');
+  current = Math.max(0, Math.min(n, total - 1));
+  slides[current].classList.add('active');
+  document.getElementById('pptCounter').textContent = `${current + 1} / ${total}`;
+  document.getElementById('pptProgress').style.width = `${((current + 1) / total) * 100}%`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === total - 1;
+  // Init charts when slide 14 is shown
+  if (current === 13 && !window._chartsInit) { initCharts(); window._chartsInit = true; }
+}
+
+function goSlide(dir) { showSlide(current + dir); }
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); }
+  else { document.exitFullscreen(); }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); goSlide(1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); goSlide(-1); }
+  else if (e.key === 'Home') { e.preventDefault(); showSlide(0); }
+  else if (e.key === 'End') { e.preventDefault(); showSlide(total - 1); }
+  else if (e.key === 'f' || e.key === 'F') { toggleFullscreen(); }
+});
+
+// Touch support
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }, { passive: true });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+    if (dx < 0) goSlide(1); else goSlide(-1);
+  }
+});
+
+// ==================== CHART INIT ====================
+function initCharts() {
+  const COLORS = {
+    Nokia:   { line:'#00D4FF', fill:'rgba(0,212,255,.75)', light:'rgba(0,212,255,.18)' },
+    Apple:   { line:'#FFFFFF', fill:'rgba(255,255,255,.75)', light:'rgba(255,255,255,.15)' },
+    Android: { line:'#4DB8FF', fill:'rgba(77,184,255,.75)', light:'rgba(77,184,255,.15)' },
+    Samsung: { line:'#FFD60A', fill:'rgba(255,214,10,.75)', light:'rgba(255,214,10,.15)' },
+    HTC:     { line:'#FF7043', fill:'rgba(255,112,67,.75)', light:'rgba(255,112,67,.15)' },
+    Motorola:{ line:'#AB47BC', fill:'rgba(171,71,188,.75)', light:'rgba(171,71,188,.15)' },
+    Other:   { line:'#455A64', fill:'rgba(69,90,100,.75)', light:'rgba(69,90,100,.15)' },
+  };
+  const YEARS = [2007,2008,2009,2010,2011,2012,2013];
+  Chart.defaults.color = '#8E8EA0';
+  Chart.defaults.borderColor = 'rgba(0,90,255,.15)';
+  Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+  Chart.defaults.font.size = 11;
+  const baseGridOpts = { color: 'rgba(0,90,255,.12)', drawBorder: false };
+  const baseTick = { color:'#8E8EA0', padding:6 };
+  const baseTooltip = { backgroundColor:'rgba(8,8,15,.92)', borderColor:'rgba(0,90,255,.35)', borderWidth:1, titleColor:'#E2E2EE', bodyColor:'#8E8EA0', padding:10, cornerRadius:8 };
+
+  function makeLegend(id, items) {
+    const el = document.getElementById(id); if (!el) return;
+    items.forEach(({label, color}) => {
+      const row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:6px;white-space:nowrap;';
+      row.innerHTML = `<span style="width:10px;height:10px;border-radius:2px;background:${color};flex-shrink:0;display:inline-block;"></span><span style="font-size:.68rem;color:#8E8EA0;letter-spacing:.5px;">${label}</span>`;
+      el.appendChild(row);
+    });
+  }
+
+  // 1. Market Share
+  (function() {
+    const rows = { Nokia:[], Apple:[], Android:[], Other:[] };
+    YEARS.forEach(y => { const d = marketShareData[y]; rows.Nokia.push(d.Nokia||0); rows.Apple.push(d.iPhone||0); rows.Android.push(d.Android||0); rows.Other.push(parseFloat(Math.max(0,100-(d.Nokia||0)-(d.iPhone||0)-(d.Android||0)).toFixed(1))); });
+    new Chart(document.getElementById('chartMarketShare'), { type:'bar', data:{ labels:YEARS.map(String), datasets:[ {label:'诺基亚',data:rows.Nokia,backgroundColor:COLORS.Nokia.fill,borderColor:COLORS.Nokia.line,borderWidth:1,stack:'s'}, {label:'Apple',data:rows.Apple,backgroundColor:COLORS.Apple.fill,borderColor:COLORS.Apple.line,borderWidth:1,stack:'s'}, {label:'Android',data:rows.Android,backgroundColor:COLORS.Android.fill,borderColor:COLORS.Android.line,borderWidth:1,stack:'s'}, {label:'其他',data:rows.Other,backgroundColor:COLORS.Other.fill,borderColor:COLORS.Other.line,borderWidth:1,stack:'s'} ] }, options:{ responsive:true, maintainAspectRatio:true, aspectRatio:1.4, plugins:{legend:{display:false},tooltip:{...baseTooltip,callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}%`}}}, scales:{ x:{stacked:true,grid:baseGridOpts,ticks:baseTick,border:{display:false}}, y:{stacked:true,min:0,max:100,grid:baseGridOpts,ticks:{...baseTick,callback:v=>v+'%'},border:{display:false}} } } });
+    makeLegend('legendMarketShare', [{label:'诺基亚',color:COLORS.Nokia.fill},{label:'Apple',color:COLORS.Apple.fill},{label:'Android',color:COLORS.Android.fill},{label:'其他',color:COLORS.Other.fill}]);
+  })();
+
+  // 2. Market Cap
+  (function() {
+    const samsungCap = YEARS.map(y => { const t = marketCapData.androidTop3[y]; return (t && t.Samsung) ? t.Samsung : null; });
+    const crisisArrowPlugin = {
+      id: 'crisisArrow',
+      afterDraw(chart) {
+        const { ctx, scales: { x, y } } = chart;
+        const xPos = x.getPixelForValue(1);
+        const yPos = y.getPixelForValue(59.29);
+        ctx.save();
+        const arrowTipX = xPos, arrowTipY = yPos - 8, arrowStartX = xPos - 30, arrowStartY = yPos - 68;
+        ctx.strokeStyle = '#FF3B30'; ctx.fillStyle = '#FF3B30'; ctx.lineWidth = 1.8; ctx.setLineDash([]);
+        ctx.beginPath(); ctx.moveTo(arrowStartX, arrowStartY); ctx.lineTo(arrowTipX, arrowTipY); ctx.stroke();
+        const angle = Math.atan2(arrowTipY - arrowStartY, arrowTipX - arrowStartX), headLen = 9;
+        ctx.beginPath(); ctx.moveTo(arrowTipX, arrowTipY);
+        ctx.lineTo(arrowTipX - headLen * Math.cos(angle - Math.PI/6), arrowTipY - headLen * Math.sin(angle - Math.PI/6));
+        ctx.lineTo(arrowTipX - headLen * Math.cos(angle + Math.PI/6), arrowTipY - headLen * Math.sin(angle + Math.PI/6));
+        ctx.closePath(); ctx.fill();
+        const labelText = '次贷危机', labelCX = arrowStartX - 2, labelCY = arrowStartY - 16;
+        ctx.font = '600 11px "Noto Sans SC", sans-serif';
+        const tw = ctx.measureText(labelText).width, pad = 6;
+        const bx = labelCX - tw/2 - pad, by = labelCY - 12, bw = tw + pad*2, bh = 20, br = 4;
+        ctx.fillStyle = 'rgba(255,59,48,.14)'; ctx.strokeStyle = 'rgba(255,59,48,.6)'; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(bx+br, by); ctx.lineTo(bx+bw-br, by); ctx.quadraticCurveTo(bx+bw, by, bx+bw, by+br); ctx.lineTo(bx+bw, by+bh-br); ctx.quadraticCurveTo(bx+bw, by+bh, bx+bw-br, by+bh); ctx.lineTo(bx+br, by+bh); ctx.quadraticCurveTo(bx, by+bh, bx, by+bh-br); ctx.lineTo(bx, by+br); ctx.quadraticCurveTo(bx, by, bx+br, by); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = '#FF3B30'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(labelText, labelCX, labelCY - 2);
+        ctx.restore();
+      }
+    };
+    new Chart(document.getElementById('chartMarketCap'), { type:'line', data:{ labels:YEARS.map(String), datasets:[ {label:'Apple',data:YEARS.map(y=>marketCapData.Apple[y]),borderColor:COLORS.Apple.line,backgroundColor:COLORS.Apple.light,borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:.35,fill:false}, {label:'诺基亚',data:YEARS.map(y=>marketCapData.Nokia[y]),borderColor:COLORS.Nokia.line,backgroundColor:COLORS.Nokia.light,borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:.35,fill:false}, {label:'Samsung',data:samsungCap,borderColor:COLORS.Samsung.line,backgroundColor:COLORS.Samsung.light,borderWidth:2,pointRadius:4,pointHoverRadius:6,tension:.35,fill:false,spanGaps:true} ] }, options:{ responsive:true, maintainAspectRatio:true, aspectRatio:1.4, plugins:{legend:{display:false},tooltip:{...baseTooltip,callbacks:{label:ctx=>`${ctx.dataset.label}: $${ctx.parsed.y}B`}}}, scales:{ x:{grid:baseGridOpts,ticks:baseTick,border:{display:false}}, y:{grid:baseGridOpts,ticks:{...baseTick,callback:v=>'$'+v+'B'},border:{display:false}} } }, plugins:[crisisArrowPlugin] });
+    makeLegend('legendMarketCap', [{label:'Apple',color:COLORS.Apple.line},{label:'诺基亚',color:COLORS.Nokia.line},{label:'Samsung',color:COLORS.Samsung.line}]);
+  })();
+
+  // 3. Sales Revenue
+  (function() {
+    const samsungRev = YEARS.map(y => { const t = salesRevenueData.androidTop3[y]; return (t && t.Samsung) ? t.Samsung : 0; });
+    new Chart(document.getElementById('chartSalesRevenue'), { type:'bar', data:{ labels:YEARS.map(String), datasets:[ {label:'Apple',data:YEARS.map(y=>salesRevenueData.Apple[y]),backgroundColor:COLORS.Apple.fill,borderColor:COLORS.Apple.line,borderWidth:1,borderRadius:3}, {label:'诺基亚',data:YEARS.map(y=>salesRevenueData.Nokia[y]),backgroundColor:COLORS.Nokia.fill,borderColor:COLORS.Nokia.line,borderWidth:1,borderRadius:3}, {label:'Samsung',data:samsungRev,backgroundColor:COLORS.Samsung.fill,borderColor:COLORS.Samsung.line,borderWidth:1,borderRadius:3} ] }, options:{ responsive:true, maintainAspectRatio:true, aspectRatio:1.4, plugins:{legend:{display:false},tooltip:{...baseTooltip,callbacks:{label:ctx=>`${ctx.dataset.label}: $${ctx.parsed.y}B`}}}, scales:{ x:{grid:baseGridOpts,ticks:baseTick,border:{display:false}}, y:{grid:baseGridOpts,ticks:{...baseTick,callback:v=>'$'+v+'B'},border:{display:false}} } } });
+    makeLegend('legendSalesRevenue', [{label:'Apple',color:COLORS.Apple.fill},{label:'诺基亚',color:COLORS.Nokia.fill},{label:'Samsung',color:COLORS.Samsung.fill}]);
+  })();
+
+  // 4. Sales Volume
+  (function() {
+    const samsungVol = YEARS.map(y => { const t = salesVolumeData.androidTop3[y]; return (t && t.Samsung) ? t.Samsung : 0; });
+    new Chart(document.getElementById('chartSalesVolume'), { type:'bar', data:{ labels:YEARS.map(String), datasets:[ {label:'Apple',data:YEARS.map(y=>salesVolumeData.Apple[y]),backgroundColor:COLORS.Apple.fill,borderColor:COLORS.Apple.line,borderWidth:1,borderRadius:3}, {label:'诺基亚',data:YEARS.map(y=>salesVolumeData.Nokia[y]),backgroundColor:COLORS.Nokia.fill,borderColor:COLORS.Nokia.line,borderWidth:1,borderRadius:3}, {label:'Samsung',data:samsungVol,backgroundColor:COLORS.Samsung.fill,borderColor:COLORS.Samsung.line,borderWidth:1,borderRadius:3} ] }, options:{ responsive:true, maintainAspectRatio:true, aspectRatio:1.4, plugins:{legend:{display:false},tooltip:{...baseTooltip,callbacks:{label:ctx=>`${ctx.dataset.label}: ${ctx.parsed.y}M`}}}, scales:{ x:{grid:baseGridOpts,ticks:baseTick,border:{display:false}}, y:{grid:baseGridOpts,ticks:{...baseTick,callback:v=>v+'M'},border:{display:false}} } } });
+    makeLegend('legendSalesVolume', [{label:'Apple',color:COLORS.Apple.fill},{label:'诺基亚',color:COLORS.Nokia.fill},{label:'Samsung',color:COLORS.Samsung.fill}]);
+  })();
+}
+
+// ==================== INIT ====================
+showSlide(0);
+</script>
+</body>
+</html>
