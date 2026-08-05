@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>倒计时</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    z-index: 0;
+    animation: float 12s ease-in-out infinite;
+  }
+  .bg-orb.one { width: 400px; height: 400px; background: #e94560; top: -100px; left: -80px; }
+  .bg-orb.two { width: 500px; height: 500px; background: #5b86e5; bottom: -150px; right: -100px; animation-delay: -4s; }
+  .bg-orb.three { width: 300px; height: 300px; background: #9b59b6; top: 40%; right: 20%; animation-delay: -8s; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.08); }
+    66% { transform: translate(-25px, 25px) scale(0.95); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .deadline-label {
+    font-size: 1rem;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.5rem;
+  }
+
+  .deadline-time {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .countdown {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 110px;
+  }
+
+  .num-box {
+    position: relative;
+    width: 110px;
+    height: 120px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .num-box::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  }
+
+  .num {
+    font-size: 3.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, #fff, rgba(255,255,255,0.7));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+
+  .num.tick {
+    animation: tickAnim 0.5s ease;
+  }
+
+  @keyframes tickAnim {
+    0% { transform: translateY(-100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  .label {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .colon {
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.25);
+    align-self: center;
+    margin-top: -2rem;
+  }
+
+  .status {
+    margin-top: 3rem;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.1em;
+  }
+
+  .ended {
+    display: none;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #e94560, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 1rem;
+  }
+
+  .progress-wrap {
+    margin-top: 2.5rem;
+    width: 100%;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #e94560, #5b86e5);
+    border-radius: 2px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  .progress-text {
+    margin-top: 0.6rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.15em;
+  }
+
+  @media (max-width: 600px) {
+    .unit { min-width: 75px; }
+    .num-box { width: 75px; height: 85px; }
+    .num { font-size: 2.4rem; }
+    .colon { font-size: 1.8rem; margin-top: -1.5rem; }
+    .countdown { gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="bg-orb one"></div>
+  <div class="bg-orb two"></div>
+  <div class="bg-orb three"></div>
+
+  <div class="container">
+    <div class="deadline-label">距截止时间还有</div>
+    <div class="deadline-time">起始 2026年6月9日 6:00 — 截止 2026年8月14日 23:45</div>
+
+    <div class="countdown" id="countdown">
+      <div class="unit">
+        <div class="num-box"><span class="num" id="days">00</span></div>
+        <div class="label">天</div>
+      </div>
+      <div class="colon">:</div>
+      <div class="unit">
+        <div class="num-box"><span class="num" id="hours">00</span></div>
+        <div class="label">时</div>
+      </div>
+      <div class="colon">:</div>
+      <div class="unit">
+        <div class="num-box"><span class="num" id="minutes">00</span></div>
+        <div class="label">分</div>
+      </div>
+      <div class="colon">:</div>
+      <div class="unit">
+        <div class="num-box"><span class="num" id="seconds">00</span></div>
+        <div class="label">秒</div>
+      </div>
+    </div>
+
+    <div class="ended" id="ended">时间已到</div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressText">100% 剩余</div>
+    </div>
+
+    <div class="status" id="status">— 倒计时进行中 —</div>
+  </div>
+
+<script>
+  const deadline = new Date("2026-08-14T23:45:00").getTime();
+  const startRef = new Date("2026-06-09T06:00:00").getTime(); // 进度条固定起点
+
+  const elDays = document.getElementById("days");
+  const elHours = document.getElementById("hours");
+  const elMinutes = document.getElementById("minutes");
+  const elSeconds = document.getElementById("seconds");
+  const countdownEl = document.getElementById("countdown");
+  const endedEl = document.getElementById("ended");
+  const statusEl = document.getElementById("status");
+  const progressFill = document.getElementById("progressFill");
+  const progressText = document.getElementById("progressText");
+
+  const prev = { d: "", h: "", m: "", s: "" };
+
+  function pad(n) {
+    return String(n).padStart(2, "0");
+  }
+
+  function animate(el, key, val) {
+    const str = pad(val);
+    if (prev[key] !== str) {
+      el.textContent = str;
+      el.classList.remove("tick");
+      void el.offsetWidth; // reflow
+      el.classList.add("tick");
+      prev[key] = str;
+    }
+  }
+
+  function update() {
+    const now = Date.now();
+    const diff = deadline - now;
+
+    if (diff <= 0) {
+      countdownEl.style.display = "none";
+      endedEl.style.display = "block";
+      statusEl.textContent = "— 截止时间已到 —";
+      progressFill.style.width = "0%";
+      progressText.textContent = "0% 剩余";
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    animate(elDays, "d", days);
+    animate(elHours, "h", hours);
+    animate(elMinutes, "m", minutes);
+    animate(elSeconds, "s", seconds);
+
+    // 进度条：剩余百分比，从 100% 逐渐降到 0%
+    const totalSpan = deadline - startRef;
+    const remaining = deadline - now;
+    let pct = totalSpan > 0 ? (remaining / totalSpan) * 100 : 0;
+    pct = Math.max(0, Math.min(100, pct));
+    progressFill.style.width = pct.toFixed(1) + "%";
+    progressText.textContent = pct.toFixed(1) + "% 剩余";
+  }
+
+  update();
+  setInterval(update, 1000);
+</script>
+</body>
+</html>

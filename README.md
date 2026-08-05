@@ -10,3 +10,5 @@
 [史蒂夫·乔布斯数字生命](https://edward-eh-holmes.github.io/Slap/Jobs/ "Steve Jobs")
 
 [Attention is All You Need](https://edward-eh-holmes.github.io/Slap/Transformer/ "Transformer架构论文")
+
+[从在一起到第一次见面倒计时](https://edward-eh-holmes.github.io/Love/First_Meet/ "从在一起到第一次见面倒计时")
