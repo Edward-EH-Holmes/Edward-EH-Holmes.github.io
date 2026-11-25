@@ -51,10 +51,14 @@ html, body {
   opacity: 0;
   visibility: hidden;
   transform: translateX(3%);
-  transition: opacity .45s ease, transform .45s ease, visibility .45s;
+  /* visibility 用 0s + 延迟，避免动画结束瞬间闪回隐藏 */
+  transition: opacity .45s ease, transform .45s ease, visibility 0s linear .45s;
 }
 .slide.dark { background: var(--ink); }
-.slide.active { opacity: 1; visibility: visible; transform: translateX(0); }
+.slide.active {
+  opacity: 1; visibility: visible; transform: translateX(0);
+  transition: opacity .45s ease, transform .45s ease, visibility 0s;
+}
 .slide.prev  { opacity: 0; transform: translateX(-3%); }
 
 /* 通用绝对定位文本：坐标由内联 --x/--y（px）提供 */
@@ -78,7 +82,9 @@ html, body {
 .lbl     { --fs: 31; --fw: 700; --c: var(--blue); line-height: 1.2; }
 .dark .lbl { --c: var(--pale); }
 .body    { --c: var(--ink); }
+.dark .body { --c: #FFFFFF; }
 .note    { --fs: 20; --c: var(--muted); line-height: 1.35; }
+.dark .note { --c: var(--pale); }
 .num     { --fw: 700; }
 .numl    { --fw: 700; line-height: 1.2; }
 

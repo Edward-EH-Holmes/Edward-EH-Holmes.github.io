@@ -72,6 +72,11 @@
       li.classList.toggle('on', i === index);
     });
 
+    // 同步 URL 锚点，便于分享指定页（如 #5 打开第 5 页）
+    if (window.location.hash !== '#' + (index + 1)) {
+      history.replaceState(null, '', '#' + (index + 1));
+    }
+
     showControls();
   }
   function next() { go(index + 1); }
@@ -188,14 +193,33 @@
   document.addEventListener('mousemove', showControls);
 
   window.addEventListener('resize', fit);
+  window.addEventListener('orientationchange', function () {
+    setTimeout(fit, 120);
+    setTimeout(fit, 400);
+  });
   document.addEventListener('fullscreenchange', fit);
   document.addEventListener('webkitfullscreenchange', fit);
+  // 用 ResizeObserver 兜底：视口尺寸稳定后必定重算一次
+  if (window.ResizeObserver) {
+    new ResizeObserver(fit).observe(document.documentElement);
+  }
+  setTimeout(fit, 100);
+  setTimeout(fit, 500);
 
   /* ---------- 初始化 ---------- */
   totalEl.textContent = pad(total);
   buildToc();
   fit();
-  go(0, true);
+
+  // 支持 #页码 深链与浏览器前进/后退
+  function fromHash() {
+    var m = /^#(\d+)$/.exec(window.location.hash || '');
+    if (m) go(parseInt(m[1], 10) - 1, true);
+  }
+  window.addEventListener('hashchange', fromHash);
+
+  var initial = /^#(\d+)$/.exec(window.location.hash || '');
+  go(initial ? parseInt(initial[1], 10) - 1 : 0, true);
   showControls();
 
   // 8 秒后收起键盘提示
