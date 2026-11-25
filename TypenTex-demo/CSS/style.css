@@ -315,6 +315,22 @@ html, body {
 }
 #toc-mask.open { opacity: 1; visibility: visible; }
 
+/* ---------- 独立标注块 ---------- */
+.callout {
+  position: absolute;
+  left: calc(var(--x) * 1px);
+  top: calc(var(--y) * 1px);
+  width: calc(var(--w) * 1px);
+  padding: 12px 20px;
+  background: #EEF1FA;
+  border-left: 4px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
 /* ---------- 结束页 ---------- */
 .thanks-title {
   position: absolute;
