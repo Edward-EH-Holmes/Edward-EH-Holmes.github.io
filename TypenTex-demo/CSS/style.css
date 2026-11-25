@@ -315,6 +315,47 @@ html, body {
 }
 #toc-mask.open { opacity: 1; visibility: visible; }
 
+/* ---------- 结束页 ---------- */
+.thanks-title {
+  position: absolute;
+  left: 0; right: 0; top: 128px;
+  text-align: center;
+  font-size: 76px; font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 6px;
+}
+.thanks-sub {
+  position: absolute;
+  left: 0; right: 0; top: 224px;
+  text-align: center;
+  font-size: 24px;
+  color: var(--pale);
+}
+.qr-frame {
+  position: absolute;
+  left: 50%; top: 288px;
+  transform: translateX(-50%);
+  width: 200px; height: 200px;
+  padding: 12px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .3);
+}
+.qr-frame img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  image-rendering: auto;
+}
+.qr-hint {
+  position: absolute;
+  left: 0; right: 0; top: 506px;
+  text-align: center;
+  font-size: 18px;
+  color: var(--pale);
+  letter-spacing: 2px;
+}
+
 /* ---------- 窄屏提示 ---------- */
 @media (max-width: 520px) {
   #hint { display: none; }
