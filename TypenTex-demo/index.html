@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TypenTeX · 投资人路演</title>
+<link rel="stylesheet" href="./CSS/style.css">
+</head>
+<body>
+
+<div id="viewport">
+  <div id="stage">
+
+    <!-- 01 封面 -->
+    <section class="slide dark cover" data-title="封面 · 平板能写完一篇论文吗？">
+      <img class="cover-img" src="./assets/cover.jpeg" alt="">
+      <div class="t" style="--x:74;--y:75;--w:600;--fs:42;--fw:700;--c:#fff;--lh:1.2">TypenTeX</div>
+      <div class="t" style="--x:76;--y:142;--w:540;--fs:20;--fw:700;--c:#B8CCFF;--lh:1.2">投资人路演</div>
+      <div class="t" style="--x:74;--y:222;--w:660;--fs:71;--fw:700;--c:#fff;--lh:1.3">平板能写完<br>一篇论文吗？</div>
+      <div class="t" style="--x:77;--y:437;--w:680;--fs:29;--c:#B8CCFF;--lh:1.3">面向中国内地科研团队的平板学术写作工具</div>
+      <div class="t" style="--x:78;--y:590;--w:600;--fs:24;--c:#fff;--lh:1.2">Edward（赵珊禾）</div>
+      <div class="t" style="--x:78;--y:630;--w:600;--fs:18;--c:#CFD9ED;--lh:1.2">香港理工大学商业分析硕士</div>
+    </section>
+
+    <!-- 02 市场机会 -->
+    <section class="slide" data-title="市场机会 · 谁有平板，却仍回电脑改论文？">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">市场机会</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">谁有平板，却仍回电脑改论文？</div>
+      <div class="t num" style="--x:72;--y:213;--w:456;--fs:109;--c:#274CCD;--lh:1.1">1.8 万</div>
+      <div class="t" style="--x:78;--y:368;--w:415;--fs:29;--fw:700;--lh:1.2">南京大学 LaTeX 服务用户</div>
+      <div class="t note" style="--x:78;--y:428;--w:420">校园案例，2025 年报告</div>
+      <div class="t lbl" style="--x:546;--y:215;--w:650;--h:47">目标作者</div>
+      <div class="t body" style="--x:546;--y:276;--w:630;--fs:24;--lh:1.45">近 90 天改过 LaTeX 源码，拥有平板，却没在平板上改过源码。</div>
+      <div class="t lbl" style="--x:546;--y:375;--w:650;--h:48">一个可验证的场景</div>
+      <div class="t body" style="--x:546;--y:436;--w:630;--fs:24;--lh:1.5">组会上发现公式编号有误。请作者带上自己的模板，观察能否在平板上改好并编译出 PDF。</div>
+      <div class="t note" style="--x:78;--y:594;--w:1118">先在参与试点的中国内地高校测量这类作者的占比。</div>
+      <div class="foot"><span>TypenTeX</span><span>02</span></div>
+    </section>
+
+    <!-- 03 写作痛点 -->
+    <section class="slide" data-title="写作痛点 · 论文排版的两种门槛">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">写作痛点</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">论文排版的两种门槛</div>
+      <div class="t numl" style="--x:74;--y:219;--w:524;--fs:73;--c:#274CCD">Word</div>
+      <div class="t numl" style="--x:662;--y:219;--w:526;--fs:73;--c:#274CCD">LaTeX</div>
+      <div class="t" style="--x:78;--y:327;--w:510;--fs:32;--fw:700">版式调整</div>
+      <div class="t" style="--x:664;--y:327;--w:510;--fs:32;--fw:700">学习与调试</div>
+      <div class="t body" style="--x:78;--y:397;--w:505;--fs:25;--lh:1.5">插入一张图，可能就要重查分页和编号。多人修改时，还要统一样式。</div>
+      <div class="t body" style="--x:664;--y:397;--w:504;--fs:25;--lh:1.5">模板统一处理版式和编号。初学者仍需学习语法、配置宏包并理解编译报错。</div>
+      <div class="t note" style="--x:78;--y:589;--w:1118">产品机会在于保留 LaTeX 的模板能力，同时降低配置和调试成本。</div>
+      <div class="foot"><span>TypenTeX</span><span>03</span></div>
+    </section>
+
+    <!-- 04 产品原型 -->
+    <section class="slide" data-title="产品原型 · TypenTeX">
+      <img class="product-img" src="./assets/product.jpeg" alt="TypenTeX 产品概念图">
+      <div class="t eyebrow" style="--x:78;--y:52;--w:600;--h:32">产品原型</div>
+      <div class="t" style="--x:74;--y:106;--w:640;--fs:79;--fw:700;--lh:1.15">TypenTeX</div>
+      <div class="t" style="--x:78;--y:215;--w:625;--fs:29;--fw:700;--c:#274CCD;--lh:1.3">在 Android 平板上编辑源码、核对 PDF</div>
+      <div class="t" style="--x:78;--y:310;--w:605;--fs:26;--fw:700;--lh:1.2">已发布　Android v0.0.4</div>
+      <div class="t body" style="--x:78;--y:361;--w:586;--fs:24;--lh:1.5">首次下载宏包后可离线编译。AI 可在同轮创建并修改文件，编辑器自动刷新，保留最近 20 条编译日志。</div>
+      <div class="t" style="--x:78;--y:468;--w:595;--fs:26;--fw:700;--lh:1.2">规划中　账号与项目协作</div>
+      <div class="t body" style="--x:78;--y:519;--w:586;--fs:24;--lh:1.5">登录后可保留纯本地项目，按需指令 AI 修改。主动上传后，才能跨设备同步或邀请协作者。</div>
+      <div class="t" style="--x:1050;--y:657;--w:180;--fs:18;--fw:700;--lh:1.2">产品概念图</div>
+      <div class="foot-left">04</div>
+    </section>
+
+    <!-- 05 早期高校反馈 -->
+    <section class="slide" data-title="早期高校反馈 · 熟练用户反馈指向 AI 质量">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">早期高校反馈（324 份）</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">熟练用户反馈指向 AI 质量</div>
+      <table class="grid" style="--x:78;--y:222;--w:608;--rh:67px">
+        <colgroup><col style="width:256px"><col style="width:189px"><col style="width:163px"></colgroup>
+        <tr><th>用户熟练度</th><th>好评 / 样本</th><th>好评率</th></tr>
+        <tr><td class="key">初学者</td><td>72 / 107</td><td>67.3%</td></tr>
+        <tr class="alt"><td class="key">有一定经验</td><td>88 / 101</td><td>87.1%</td></tr>
+        <tr><td class="key">熟练用户</td><td>73 / 116</td><td>62.9%</td></tr>
+      </table>
+      <div class="t num" style="--x:744;--y:218;--w:430;--fs:99;--c:#274CCD;--lh:1.1">31 / 43</div>
+      <div class="t" style="--x:750;--y:365;--w:440;--fs:27;--fw:700;--lh:1.35">条熟练用户差评主要归因于模型或智能体</div>
+      <div class="t note" style="--x:750;--y:474;--w:430;--fs:23;--lh:1.5">233/324 人给出好评。试点将用 v0.0.4 单独测量首次修复成功率。</div>
+      <div class="foot"><span>TypenTeX</span><span>05</span></div>
+    </section>
+
+    <!-- 06 竞争定位 -->
+    <section class="slide" data-title="竞争定位 · 平板写作工具">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">平板写作工具</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">竞争定位</div>
+      <table class="grid" style="--x:78;--y:190;--w:1124;--rh:61px">
+        <colgroup><col style="width:156px"><col style="width:160px"><col style="width:190px"><col style="width:310px"><col style="width:308px"></colgroup>
+        <tr><th>维度</th><th>Texifier iOS</th><th>Typst</th><th>TeXPage / FlyLaTeX</th><th>TypenTeX 规划</th></tr>
+        <tr><td class="key">编译</td><td>本地可用</td><td>本地或在线</td><td>服务器</td><td class="hl">始终本地</td></tr>
+        <tr class="alt"><td class="key">引擎</td><td>LaTeX</td><td>Typst</td><td>LaTeX</td><td class="hl">LaTeX + Typst</td></tr>
+        <tr><td class="key">平板端</td><td>iPad 客户端</td><td>网页</td><td>网页</td><td class="hl">原生客户端</td></tr>
+      </table>
+      <div class="t" style="--x:78;--y:475;--w:1110;--fs:27;--fw:700;--c:#274CCD;--lh:1.3">已发布 Android 版支持本地 LaTeX，下一步增加 Typst 与桌面客户端。</div>
+      <div class="t body" style="--x:78;--y:535;--w:1110;--fs:25;--lh:1.3">试点比较同一份中文论文模板在平板上修复并得到正确 PDF 所需的时间。</div>
+      <div class="foot"><span>TypenTeX</span><span>06</span></div>
+    </section>
+
+    <!-- 07 学术 AI 助手 -->
+    <section class="slide dark" data-title="规划中的学术 AI 助手">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">规划中的学术 AI 助手</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">学术 AI 如何协助作者完成一篇论文</div>
+      <div class="t" style="--x:78;--y:170;--w:1118;--fs:23;--fw:700;--c:#B8CCFF;--lh:1.3">拟微调完整规模的 DeepSeek-V4.1-Flash 与 Qwen3.8-Max</div>
+      <div class="t lbl" style="--x:78;--y:232;--w:540;--fs:30;--h:45">生成与修复排版代码</div>
+      <div class="t body" style="--x:78;--y:290;--w:520;--fs:25;--lh:1.5">在设备上编译工作副本。失败后按授权发送报错与源码片段，重试至成功或作者停止。</div>
+      <div class="t lbl" style="--x:658;--y:232;--w:540;--fs:30;--h:45">论文润色</div>
+      <div class="t body" style="--x:658;--y:290;--w:520;--fs:25;--lh:1.5">选中段落改写论证，保留原有数值、不确定性和引文。</div>
+      <div class="t lbl" style="--x:78;--y:402;--w:540;--fs:30;--h:45">研究方向建议</div>
+      <div class="t body" style="--x:78;--y:460;--w:520;--fs:25;--lh:1.5">根据主题、数据和时间比较研究问题与方法，由学生与导师决定下一步。</div>
+      <div class="t lbl" style="--x:658;--y:402;--w:540;--fs:30;--h:45">组会幻灯片</div>
+      <div class="t body" style="--x:658;--y:460;--w:520;--fs:25;--lh:1.5">选两个论文关键点，一键按其间的修改生成可编辑 PPT，每页可回查原稿。</div>
+      <div class="t note" style="--x:78;--y:600;--w:1118;--c:#B8CCFF">训练使用获准使用的已发表学术作品和开源 LaTeX、Typst 样例。客户稿件不进入训练集。</div>
+      <div class="foot"><span>TypenTeX</span><span>07</span></div>
+    </section>
+
+    <!-- 08 市场测算 -->
+    <section class="slide" data-title="中国内地研究生市场 · 平板写作机会有多大？">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">中国内地研究生市场</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">平板写作机会有多大？</div>
+      <div class="t num" style="--x:78;--y:223;--w:350;--fs:62;--c:#274CCD;--lh:1.1">4.3 万</div>
+      <div class="t" style="--x:78;--y:331;--w:350;--fs:25;--fw:700;--lh:1.2">假设目标作者占 1%</div>
+      <div class="t body" style="--x:78;--y:402;--w:345;--fs:24;--lh:1.5">每 100 名在读研究生中，若有 1 人符合目标条件。</div>
+      <div class="t num" style="--x:466;--y:223;--w:350;--fs:62;--c:#274CCD;--lh:1.1">12.9 万</div>
+      <div class="t" style="--x:466;--y:331;--w:350;--fs:25;--fw:700;--lh:1.2">假设目标作者占 3%</div>
+      <div class="t body" style="--x:466;--y:402;--w:345;--fs:24;--lh:1.5">在同一条件下，每 100 人中若有 3 人符合。</div>
+      <div class="t num" style="--x:854;--y:223;--w:350;--fs:62;--c:#274CCD;--lh:1.1">21.5 万</div>
+      <div class="t" style="--x:854;--y:331;--w:350;--fs:25;--fw:700;--lh:1.2">假设目标作者占 5%</div>
+      <div class="t body" style="--x:854;--y:402;--w:345;--fs:24;--lh:1.5">每 100 人中若有 5 人符合，可覆盖约 21.5 万人。</div>
+      <div class="t note" style="--x:78;--y:589;--w:1118">按 2025 年在读研究生 429.95 万人测算。全国实际占比待调查，达到 10 万人需约 2.33%。</div>
+      <div class="foot"><span>TypenTeX</span><span>08</span></div>
+    </section>
+
+    <!-- 09 商业模式 -->
+    <section class="slide" data-title="商业模式 · 个人与课题组订阅价格">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">商业模式</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">个人与课题组订阅价格</div>
+      <table class="grid" style="--x:78;--y:197;--w:1124;--rh:69px">
+        <colgroup><col style="width:214px"><col style="width:300px"><col style="width:610px"></colgroup>
+        <tr><th>订阅方案</th><th>月费 / 空间</th><th>每月 AI 额度</th></tr>
+        <tr><td class="key">尝鲜版 Plus</td><td>18 元 / 10 GB</td><td>200 积分</td></tr>
+        <tr class="alt"><td class="key">专业版 Pro</td><td>38 元 / 50 GB</td><td>1,000 积分</td></tr>
+        <tr><td class="key">团队版 Team</td><td>88 元 / 100 GB</td><td>5 席共享 3,000 积分</td></tr>
+      </table>
+      <div class="t note" style="--x:78;--y:526;--w:1118">两项系数均按同一基准输入价折算。组会 PPT 每交付一页扣 2 积分，已含内部调用。</div>
+      <div class="t note" style="--x:78;--y:570;--w:1118">积分 =（输入 token 数 × 输入系数 + 输出 token 数 × 输出系数）÷ 1,000。</div>
+      <div class="foot"><span>TypenTeX</span><span>09</span></div>
+    </section>
+
+    <!-- 10 三年收入 -->
+    <section class="slide" data-title="三年收入情景与合同假设">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">商业发布后，人民币万元</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">三年收入情景与合同假设</div>
+      <div class="chart" style="--x:75;--y:194;--w:730;--h:349">
+        <div class="chart-title">预计收入（万元人民币）</div>
+        <div class="chart-plot">
+          <div class="chart-grid"><span></span><span></span><span></span><span></span></div>
+          <div class="bars">
+            <div class="bar-row"><span class="bar-label">第 1 年</span><div class="bar-track"><div class="bar" style="--pct:13.1%"></div></div><span class="bar-val">6.36</span></div>
+            <div class="bar-row"><span class="bar-label">第 2 年</span><div class="bar-track"><div class="bar" style="--pct:42.0%"></div></div><span class="bar-val">20.40</span></div>
+            <div class="bar-row"><span class="bar-label">第 3 年</span><div class="bar-track"><div class="bar" style="--pct:100%"></div></div><span class="bar-val">48.60</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="t num" style="--x:831;--y:225;--w:365;--fs:36;--c:#274CCD;--lh:1.2">100 / 500 / 1,500</div>
+      <div class="t note" style="--x:834;--y:288;--w:360;--fs:23">各年月均付费工作区</div>
+      <div class="t" style="--x:834;--y:364;--w:365;--fs:25;--fw:700;--lh:1.2">每年新增 1 / 2 / 3 个院系</div>
+      <div class="t" style="--x:834;--y:426;--w:365;--fs:23;--fw:700;--lh:1.2">假设全部续约，按全年计费</div>
+      <div class="t note" style="--x:78;--y:560;--w:1118">三年总收入分别为 6.36 万、20.40 万、48.60 万元。算力、工程与销售成本另计。</div>
+      <div class="t note" style="--x:78;--y:601;--w:1118">收入测算假设所有工作区均订阅 18 元月费的尝鲜版，院系均接入已有模型。</div>
+      <div class="foot"><span>TypenTeX</span><span>10</span></div>
+    </section>
+
+    <!-- 11 获客与增长 -->
+    <section class="slide" data-title="获客与增长 · 高校试点与首批付费客户">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">获客与增长</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">高校试点与首批付费客户</div>
+      <div class="t lbl" style="--x:78;--y:206;--w:247;--fs:28;--h:42">高校试点</div>
+      <div class="t body" style="--x:343;--y:206;--w:859;--fs:25;--lh:1.5">邀请 3 个院系和 1 个企业团队准备任务，先遣测试目标为 100 名作者完成首次本地编译。</div>
+      <div class="t lbl" style="--x:78;--y:324;--w:247;--fs:28;--h:42">个人与团队转化</div>
+      <div class="t body" style="--x:343;--y:324;--w:859;--fs:25;--lh:1.5">正式收费后，验证能否获得 10 个付费账号、至少 5 个次月续费账号及 1 个付费院系部署。</div>
+      <div class="t lbl" style="--x:78;--y:442;--w:247;--fs:28;--h:42">机构渠道</div>
+      <div class="t body" style="--x:343;--y:442;--w:859;--fs:25;--lh:1.5">通过图书馆和 CARSI 接触高校，由院系发起试点。企业客户可采购私有化部署与年度支援。</div>
+      <div class="t note" style="--x:78;--y:584;--w:1118">把机构续约和模型服务收入投入公开语料微调，以修复质量和续费检验增长。</div>
+      <div class="foot"><span>TypenTeX</span><span>11</span></div>
+    </section>
+
+    <!-- 12 开发与先遣测试 -->
+    <section class="slide" data-title="开发与先遣测试 · 12 个月路线">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">开发与先遣测试</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">12 个月开发、测试与商业发布</div>
+      <div class="t lbl" style="--x:78;--y:209;--w:247;--fs:28;--h:42">前 9 个月</div>
+      <div class="t body" style="--x:343;--y:209;--w:859;--fs:25;--lh:1.5">为 Android 加入登录，开发 iPadOS、macOS、Windows 端，以及双引擎、云同步、学术模型与文生 PPT。第 9 个月末开启先遣测试。</div>
+      <div class="t lbl" style="--x:78;--y:327;--w:247;--fs:28;--h:42">随后 3 个月</div>
+      <div class="t body" style="--x:343;--y:327;--w:859;--fs:25;--lh:1.5">迭代修复质量、断网同步恢复与组会 PPT 的证据准确性，观察四周内的重复使用。</div>
+      <div class="t lbl" style="--x:78;--y:445;--w:247;--fs:28;--h:42">商业发布</div>
+      <div class="t body" style="--x:343;--y:445;--w:859;--fs:25;--lh:1.5">开放付费订阅，通过图书馆、CARSI 和企业私有化部署开展机构销售。</div>
+      <div class="t note" style="--x:78;--y:598;--w:1118">规模化后扩展至 Linux、HarmonyOS PC 和 HarmonyOS（含平板）。</div>
+      <div class="foot"><span>TypenTeX</span><span>12</span></div>
+    </section>
+
+    <!-- 13 院系级试点报价 -->
+    <section class="slide" data-title="院系级试点拟议报价 · 四种机构部署方案">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">院系级试点拟议报价</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">四种机构部署方案</div>
+      <div class="t lbl" style="--x:78;--y:202;--w:247;--fs:28;--h:42">我方模型在院内部署</div>
+      <div class="t body" style="--x:343;--y:202;--w:859;--fs:25;--lh:1.4">部署 6 万元。模型更新及维护另收 1.8 万元/年。</div>
+      <div class="t lbl" style="--x:78;--y:304;--w:247;--fs:28;--h:42">接入机构已有 AI</div>
+      <div class="t body" style="--x:343;--y:304;--w:859;--fs:25;--lh:1.4">部署 3 万元。机构自行运维现有模型。</div>
+      <div class="t lbl" style="--x:78;--y:406;--w:247;--fs:28;--h:42">接入第三方 API</div>
+      <div class="t body" style="--x:343;--y:406;--w:859;--fs:25;--lh:1.4">部署 3 万元。机构按已有合同向模型厂商支付用量费。</div>
+      <div class="t lbl" style="--x:78;--y:508;--w:247;--fs:28;--h:42">使用我方托管 API</div>
+      <div class="t body" style="--x:343;--y:508;--w:859;--fs:25;--lh:1.4">部署 3 万元，另按积分付费。四种方案的服务器支援均为 1.2 万元/年。</div>
+      <div class="foot"><span>TypenTeX</span><span>13</span></div>
+    </section>
+
+    <!-- 14 下一轮投入 -->
+    <section class="slide dark" data-title="下一轮投入 · 资金用途与验证目标">
+      <div class="t eyebrow" style="--x:78;--y:50;--w:1000;--h:31">下一轮投入</div>
+      <div class="t h1" style="--x:78;--y:96;--w:1124;--h:70">资金用途与验证目标</div>
+      <div class="t lbl" style="--x:78;--y:225;--w:349;--fs:31;--h:50">客户端与编译</div>
+      <div class="t body" style="--x:78;--y:288;--w:349;--fs:25;--lh:1.5">完成双引擎和跨端客户端。在真实论文模板上检验离线编译、冲突恢复与权限撤回。</div>
+      <div class="t lbl" style="--x:466;--y:225;--w:349;--fs:31;--h:50">学术 AI 与云协作</div>
+      <div class="t body" style="--x:466;--y:288;--w:349;--fs:25;--lh:1.5">在 120 个留出任务上测修复效果。两种引擎分别以首修成功率达到 80% 为目标。</div>
+      <div class="t lbl" style="--x:853;--y:225;--w:349;--fs:31;--h:50">高校试点与合规</div>
+      <div class="t body" style="--x:853;--y:288;--w:349;--fs:25;--lh:1.5">验证院系付费与续约，核实模型权重、学术语料许可和面向公众服务的合规要求。</div>
+      <div class="t" style="--x:78;--y:513;--w:1120;--fs:45;--fw:700;--c:#B8CCFF;--lh:1.2">欢迎洽谈投资与高校试点合作</div>
+      <div class="t" style="--x:78;--y:591;--w:1100;--fs:24;--c:#fff;--lh:1.2">Edward（赵珊禾）</div>
+      <div class="foot"><span>TypenTeX</span><span>14</span></div>
+    </section>
+
+  </div>
+</div>
+
+<div id="topbar">
+  <span class="brand">TypenTeX <i>投资人路演</i></span>
+  <span class="hint" id="hint">← → 翻页 · 空格下一页 · F 全屏 · O 目录</span>
+</div>
+
+<div id="controls">
+  <button id="prev" title="上一页 (←)" aria-label="上一页">
+    <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <div class="counter"><b id="cur">01</b><span>/</span><span id="total">14</span></div>
+  <button id="next" title="下一页 (→)" aria-label="下一页">
+    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <div class="divider"></div>
+  <div id="progress" title="点击跳转"><div id="progress-fill"></div></div>
+  <div class="divider"></div>
+  <button id="toc-btn" title="目录 (O)" aria-label="目录">
+    <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <button id="full-btn" title="全屏 (F)" aria-label="全屏">
+    <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+  </button>
+</div>
+
+<div id="toc" aria-hidden="true">
+  <div class="toc-head"><span>演示目录</span><button id="toc-close" aria-label="关闭">×</button></div>
+  <ol id="toc-list"></ol>
+</div>
+<div id="toc-mask"></div>
+
+<script src="./JavaScript/app.js"></script>
+</body>
+</html>
